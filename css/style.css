@@ -1,0 +1,278 @@
+/* RESET */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #c9ddb9;
+    color: #222;
+}
+
+/* HEADER SMART */
+.main-header{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 40px;
+
+    background-color: rgba(255,255,255,0.8);
+
+    backdrop-filter: blur(10px);
+
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+
+/* LOGO */
+.logo{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+/* TITLU */
+.title-section{
+    text-align: center;
+}
+
+.title-section h1{
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.title-section h2{
+    font-size: 22px;
+    font-weight: normal;
+}
+
+/* MENIU */
+.main-nav{
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.main-nav a{
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+/* UNDERLINE ANIMAT */
+.main-nav a::after{
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 0;
+    height: 2px;
+
+    background-color: #000;
+
+    transition: width 0.3s ease;
+}
+
+.main-nav a:hover::after{
+    width: 100%;
+}
+
+/* HERO */
+#hero{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 60px;
+    gap: 40px;
+}
+
+.hero-text{
+    flex: 1;
+}
+
+.hero-text h1{
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.hero-text p{
+    font-size: 22px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.hero-text span{
+    font-size: 18px;
+}
+
+.hero-image img{
+    width: 320px;
+    border-radius: 12px;
+}
+
+/* TITLURI */
+.section-title{
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 36px;
+}
+
+/* SERVICII */
+#servicii{
+    padding: 60px;
+}
+
+/* GRID SELF ADAPTIVE */
+.services-grid{
+    display: grid;
+
+    /* 1fr reprezintă o fracțiune din spațiul liber disponibil.
+       Toate coloanele vor ocupa spațiul rămas în mod egal. */
+
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 25px;
+}
+
+/* CARDURI */
+.service-card{
+    background-color: white;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+    transition:
+    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.3s ease;
+}
+
+/* HOVER */
+.service-card:hover{
+    transform: translateY(-12px);
+
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.service-card img{
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.service-card h3{
+    padding: 20px 20px 10px;
+    font-size: 22px;
+}
+
+.service-card p{
+    padding: 0 20px 25px;
+    line-height: 1.6;
+}
+
+/* MISIUNE */
+.mission-section{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    background-color: white;
+
+    margin: 60px;
+
+    padding: 40px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.mission-image,
+.mission-content{
+    flex: 1;
+}
+
+.mission-image img{
+    width: 100%;
+    border-radius: 12px;
+}
+
+.mission-content h2{
+    font-size: 34px;
+    margin-bottom: 20px;
+}
+
+.mission-content p{
+    line-height: 1.8;
+    font-size: 18px;
+}
+
+/* INVERSAREA FLUXULUI PE MOBIL */
+@media(max-width:768px){
+
+    .mission-section{
+        flex-direction: column-reverse;
+    }
+
+    .main-header{
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #hero{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-image img{
+        width: 100%;
+    }
+
+}
+
+/* DESPRE */
+#despre{
+    text-align: center;
+    padding: 60px;
+}
+
+#despre h2{
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+#despre p{
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+/* FOOTER */
+footer{
+    background-color: #d8d087;
+
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    padding: 40px;
+
+    margin-top: 40px;
+}
+
+footer h4{
+    margin-bottom: 10px;
+}
