@@ -1,0 +1,162 @@
+
+   ROOT VARIABLES — exact din lecție
+============================================================ */
+:root {
+  --base-delay: 100ms;
+  --stagger-step: 150ms;
+  --spring-easing: cubic-bezier(0.5, 1.5, 0.5, 1);
+}
+
+/* ============================================================
+   RESET & BODY
+============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: #050810;
+  color: #e8eaf6;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
+
+/* ============================================================
+   GRID SECTION
+============================================================ */
+.ui-orchestrator {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* ============================================================
+   KEYFRAMES — exact din lecție
+============================================================ */
+@keyframes entrance {
+  0% {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-20deg) translateY(50px);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0) translateY(0);
+    filter: blur(0);
+  }
+}
+
+
+
+/* ============================================================
+   FEATURE WRAPPER — Calculul algoritmic al timpului de start
+   CHALLENGE #3: Non-Linear Timing — formula exponențială i² × 50ms
+============================================================ */
+.feature-wrapper {
+  /* Calculul algoritmic al timpului de start */
+  --delay: calc(var(--i) * var(--i) * 50ms);
+
+  opacity: 0;
+  /* Optimization: GPU Layering enabled */
+  will-change: transform, opacity;
+  animation: entrance 1s var(--spring-easing) forwards;
+  animation-delay: var(--delay);
+}
+
+/* ============================================================
+   CHALLENGE #1: Inverse Staggering Logic
+   Elementele de la margini apar spre centru:
+   Element 1 & 6 simultan → 2 & 5 → 3 & 4
+   Formula: distance = |i - 3.5|, delay invers proporțional
+============================================================ */
+.feature-wrapper[style*="--i: 1"],
+.feature-wrapper[style*="--i: 6"] {
+  --delay: 100ms;
+}
+
+.feature-wrapper[style*="--i: 2"],
+.feature-wrapper[style*="--i: 5"] {
+  --delay: 300ms;
+}
+
+.feature-wrapper[style*="--i: 3"],
+.feature-wrapper[style*="--i: 4"] {
+  --delay: 500ms;
+}
+
+/* ============================================================
+   FEATURE CARD — exact din lecție
+============================================================ */
+.feature-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.feature-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-4px);
+}
+
+/* ============================================================
+   CARD ICON
+============================================================ */
+.card-icon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-content h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: #e8eaf6;
+}
+
+.card-content p {
+  font-size: 0.85rem;
+  color: rgba(232, 234, 246, 0.5);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   STAGGER TEXT — Sincronizare interioară
+   Textul apare DOAR după ce cardul s-a așezat (+400ms)
+   exact din lecție
+============================================================ */
+.stagger-text {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  animation: textReveal 0.5s ease-out forwards;
+  animation-delay: calc(var(--delay) + 400ms);
+}
+
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0% 0 0);
+  }
+}

@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>System Control | SYS.CONTROL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ============================================================
+       LAYER 1 – PRIMITIVE TOKENS
+       ============================================================ */
+    :root {
+      /* Primitives */
+      --clr-cyan-raw:   0, 242, 255;
+      --clr-orange-raw: 255, 107, 0;
+      --clr-red-raw:    255, 0, 60;
+      --clr-dark-raw:   2, 2, 10;
+      --clr-white-raw:  255, 255, 255;
+
+      /* LAYER 2 – SEMANTIC */
+      --bg-primary:     rgb(var(--clr-dark-raw));
+      --bg-card:        rgba(var(--clr-white-raw), 0.04);
+      --bg-card-hover:  rgba(var(--clr-cyan-raw), 0.08);
+      --accent-primary: rgb(var(--clr-cyan-raw));
+      --accent-warm:    rgb(var(--clr-orange-raw));
+      --accent-danger:  rgb(var(--clr-red-raw));
+      --text-primary:   rgba(var(--clr-white-raw), 0.92);
+      --text-muted:     rgba(var(--clr-white-raw), 0.45);
+      --border-subtle:  rgba(var(--clr-white-raw), 0.10);
+      --border-accent:  rgba(var(--clr-cyan-raw), 0.35);
+      --glow-cyan:      0 0 20px rgba(var(--clr-cyan-raw), 0.5);
+      --glow-orange:    0 0 20px rgba(var(--clr-orange-raw), 0.5);
+
+      /* LAYER 3 – COMPONENT */
+      --nav-bg:         rgba(2, 2, 10, 0.92);
+      --card-radius:    16px;
+      --form-radius:    12px;
+
+      /* Animation engine */
+      --base-delay:     100ms;
+      --stagger-step:   130ms;
+      --spring:         cubic-bezier(0.5, 1.4, 0.5, 1);
+
+      /* 3D engine */
+      --p:       1800px;
+      --rx:      0deg;
+      --ry:      0deg;
+      --glitch:  2px;
+      --spec-x:  50%;
+      --spec-y:  50%;
+    }
+
+    /* DARK MODE – same variables, overridden */
+    body.dark-theme {
+      --bg-primary:    #000005;
+      --bg-card:       rgba(255,255,255,0.02);
+      --accent-primary: #00eaff;
+      --text-primary:  rgba(255,255,255,0.85);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Ambient grid background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(var(--clr-cyan-raw), 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--clr-cyan-raw), 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================
+       NAVIGATION  (matching existing site style from screenshot)
+       ============================================================ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 56px;
+    }
+
+    .nav__logo {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      color: var(--accent-warm);
+      letter-spacing: 0.1em;
+      text-decoration: none;
+    }
+
+    .nav__links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+
+    .nav__links a {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      text-transform: uppercase;
+    }
+    .nav__links a:hover,
+    .nav__links a.nav__links--active { color: var(--accent-primary); }
+
+    .nav__dark-toggle {
+      font-size: 0.78rem;
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--text-muted);
+      background: none;
+      border: 1px solid var(--border-subtle);
+      padding: 4px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav__dark-toggle:hover { color: var(--accent-primary); border-color: var(--accent-primary); }
+
+    /* ============================================================
+       PAGE WRAPPER
+       ============================================================ */
+    .page {
+      position: relative; z-index: 1;
+      padding-top: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      padding-bottom: 4rem;
+    }
+
+    /* ============================================================
+       SECTION HEADER ATOM
+       ============================================================ */
+    .section-label {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent-primary);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      box-shadow: var(--glow-cyan);
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       1. NEURAL GLASS CENTERPIECE  (Perechea III)
+          /* Optimization: GPU Layering enabled */
+       ============================================================ */
+    .hologram-section {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 4rem;
+    }
+
+    .neural-engine {
+      perspective: var(--p);
+      display: grid;
+      place-items: center;
+    }
+
+    .spatial-anchor {
+      position: relative;
+      width: 420px;
+      height: 280px;
+      transform-style: preserve-3d;
+      transform: rotateX(var(--rx)) rotateY(var(--ry));
+      will-change: transform;  /* Optimization: GPU Layering enabled */
+      transition: transform 0.08s ease-out;
+    }
+
+    .layer {
+      position: absolute; inset: 0;
+      border-radius: 24px;
+    }
+
+    /* Strat 0: core glow */
+    .core-glow {
+      background: radial-gradient(ellipse at center,
+        rgba(var(--clr-cyan-raw), 0.18) 0%,
+        transparent 70%);
+      transform: translateZ(-10px) scale(1.1);
+      mix-blend-mode: screen;
+    }
+
+    /* Strat 1: glass chassis */
+    .glass-chassis {
+      background: rgba(var(--clr-white-raw), 0.02);
+      backdrop-filter: blur(30px) saturate(180%) contrast(115%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%) contrast(115%);
+      border: 1px solid rgba(var(--clr-white-raw), 0.12);
+      box-shadow:
+        inset 0 1px 0 rgba(var(--clr-white-raw), 0.08),
+        inset 0 0 80px rgba(var(--clr-cyan-raw), 0.04),
+        0 0 60px rgba(var(--clr-cyan-raw), 0.10);
+      transform: translateZ(20px);
+    }
+
+    /* Strat 2: data interface */
+    .data-interface {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transform: translateZ(80px);
+      text-align: center;
+    }
+
+    .data-interface .header {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent-primary);
+      letter-spacing: 0.2em;
+      opacity: 0.7;
+    }
+
+    /* Glitch text – Perechea III */
+    .glitch-text {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #fff;
+      text-shadow:
+        calc(var(--glitch) * -1) 0 rgba(var(--clr-red-raw), 0.8),
+        var(--glitch) 0 rgba(var(--clr-cyan-raw), 0.8);
+      animation: glitchPulse 3s infinite;
+    }
+
+    @keyframes glitchPulse {
+      0%, 90%, 100% { text-shadow: calc(var(--glitch)*-1) 0 rgba(var(--clr-red-raw),.8), var(--glitch) 0 rgba(var(--clr-cyan-raw),.8); }
+      92% { text-shadow: calc(var(--glitch)*-3) 0 rgba(var(--clr-red-raw),1), calc(var(--glitch)*3) 0 rgba(var(--clr-cyan-raw),1); }
+      94% { text-shadow: calc(var(--glitch)*-1) 0 rgba(var(--clr-red-raw),.8), var(--glitch) 0 rgba(var(--clr-cyan-raw),.8); }
+      96% { text-shadow: calc(var(--glitch)*-4) 0 rgba(var(--clr-red-raw),1), calc(var(--glitch)*4) 0 rgba(var(--clr-cyan-raw),1); }
+    }
+
+    .data-interface .stats {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--accent-warm);
+      letter-spacing: 0.18em;
+      opacity: 0.8;
+    }
+
+    .status-dots {
+      display: flex; gap: 1rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-top: 0.4rem;
+    }
+    .status-dots span { display: flex; align-items: center; gap: 4px; }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #00ff88;
+      box-shadow: 0 0 8px #00ff88;
+      animation: blink 2s infinite;
+    }
+    .dot.orange { background: var(--accent-warm); box-shadow: var(--glow-orange); animation-delay: 0.5s; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* Strat 3: orbital */
+    .orbital-node {
+      transform: translateZ(160px);
+      pointer-events: none;
+    }
+    .satellite {
+      position: absolute;
+      width: 14px; height: 14px;
+      background: var(--accent-cyan, #00f2ff);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--accent-primary), 0 0 40px rgba(var(--clr-cyan-raw),.4);
+      top: 50%; left: 50%;
+      mix-blend-mode: screen;
+      animation: orbit 4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes orbit {
+      0%   { transform: translate(-200px, -10px) translateZ(-40px) scale(0.7); }
+      50%  { transform: translate(200px, -10px) translateZ(80px) scale(1.3); }
+      100% { transform: translate(-200px, -10px) translateZ(-40px) scale(0.7); }
+    }
+
+    /* Strat 4: specular highlight */
+    .specular-highlight {
+      border-radius: 24px;
+      background: radial-gradient(
+        circle at var(--spec-x) var(--spec-y),
+        rgba(var(--clr-white-raw), 0.06) 0%,
+        transparent 55%
+      );
+      transform: translateZ(30px);
+      pointer-events: none;
+      mix-blend-mode: screen;
+      transition: background 0.05s linear;
+    }
+
+    /* Ray-traced shadow */
+    .spatial-anchor::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: 10%; right: 10%;
+      height: 30px;
+      background: radial-gradient(ellipse, rgba(var(--clr-cyan-raw),.15), transparent 70%);
+      filter: blur(12px);
+      transform: translateZ(-50px) rotateX(80deg);
+      transition: transform 0.1s ease-out;
+    }
+
+    /* ============================================================
+       2. LIVE STATS BAR
+       ============================================================ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--card-radius);
+      padding: 1.4rem 1.2rem;
+      text-align: center;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .stat-card:hover {
+      border-color: var(--border-accent);
+      box-shadow: var(--glow-cyan);
+    }
+    .stat-card__value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-warm);
+      font-family: 'Share Tech Mono', monospace;
+      display: block;
+    }
+    .stat-card__label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+      display: block;
+    }
+
+    /* ============================================================
+       3. SERVICE MODULES GRID  (Perechea II – Chained Animations)
+          /* Optimization: GPU Layering enabled */
+       ============================================================ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Entrance keyframe – cinematic */
+    @keyframes entrance {
+      0% {
+        opacity: 0;
+        transform: perspective(1000px) rotateX(-15deg) translateY(40px);
+        filter: blur(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: perspective(1000px) rotateX(0) translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes textReveal {
+      from { clip-path: inset(0 100% 0 0); }
+      to   { clip-path: inset(0 0% 0 0); }
+    }
+
+    /* Algoritmic stagger via --i */
+    .feature-wrapper {
+      --delay: calc(var(--base-delay) + (var(--i) * var(--i) * 45ms)); /* Non-linear */
+      opacity: 0;
+      will-change: transform, opacity;  /* Optimization: GPU Layering enabled */
+      animation: entrance 0.9s var(--spring) forwards;
+      animation-delay: var(--delay);
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--card-radius);
+      padding: 1.5rem;
+      height: 100%;
+      transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+      overflow: hidden;
+      position: relative;
+    }
+    .feature-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      box-shadow: var(--glow-cyan);
+    }
+
+    /* Active pill */
+    .feature-card__badge {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: rgba(0,255,136,0.15);
+      color: #00ff88;
+      border: 1px solid rgba(0,255,136,0.3);
+      margin-bottom: 0.8rem;
+    }
+    .feature-card__badge--warn {
+      background: rgba(var(--clr-orange-raw),0.15);
+      color: var(--accent-warm);
+      border-color: rgba(var(--clr-orange-raw),0.3);
+    }
+
+    .feature-card__title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      animation: textReveal 0.5s ease-out forwards;
+      animation-delay: calc(var(--delay) + 350ms);
+      clip-path: inset(0 100% 0 0);
+    }
+    .feature-card__desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      line-height: 1.5;
+      animation: textReveal 0.5s ease-out forwards;
+      animation-delay: calc(var(--delay) + 500ms);
+      clip-path: inset(0 100% 0 0);
+    }
+
+    /* GPU progress bar */
+    .feature-card__bar {
+      margin-top: 1rem;
+      height: 3px;
+      background: rgba(var(--clr-white-raw),0.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .feature-card__bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-primary), rgba(var(--clr-cyan-raw),0.4));
+      border-radius: 2px;
+      box-shadow: var(--glow-cyan);
+      transition: width 1.2s ease-out;
+    }
+
+    /* ============================================================
+       4. CONTROLS GRID (right panel from screenshot)
+       ============================================================ */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .controls-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--card-radius);
+      padding: 1.5rem;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .toggle-row:last-child { border-bottom: none; }
+
+    .toggle-row__label { font-size: 0.82rem; font-weight: 600; }
+    .toggle-row__sub   { font-size: 0.68rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* CSS-only toggle */
+    .toggle-input { display: none; }
+    .toggle-switch {
+      width: 40px; height: 22px;
+      background: rgba(var(--clr-white-raw),0.1);
+      border-radius: 11px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+      flex-shrink: 0;
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      top: 3px; left: 3px;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .toggle-input:checked + .toggle-switch {
+      background: var(--accent-primary);
+      box-shadow: var(--glow-cyan);
+    }
+    .toggle-input:checked + .toggle-switch::after {
+      transform: translateX(18px);
+    }
+
+    /* ============================================================
+       5. SECURE ACCESS FORM  (Perechea IV – BEM + CSS State Machine)
+       ============================================================ */
+    .form-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--card-radius);
+      padding: 2rem;
+      transition: border-color 0.3s;
+    }
+
+    /* BEM: block = form */
+    .form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    /* Focus-within UX */
+    .form:focus-within { border: inherit; }
+    .form-section:focus-within {
+      border-color: rgba(var(--clr-cyan-raw), 0.4);
+      box-shadow: 0 0 0 1px rgba(var(--clr-cyan-raw),0.15);
+    }
+
+    /* BEM: form__group */
+    .form__group { position: relative; }
+
+    /* BEM: form__input */
+    .form__input {
+      width: 100%;
+      background: rgba(var(--clr-white-raw), 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      padding: 1rem 1rem 0.5rem;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    /* BEM: form__label */
+    .form__label {
+      position: absolute;
+      top: 50%; left: 1rem;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      pointer-events: none;
+      transition: all 0.2s;
+      letter-spacing: 0.08em;
+    }
+
+    /* Floating label */
+    .form__input:focus ~ .form__label,
+    .form__input:not(:placeholder-shown) ~ .form__label {
+      top: 0.45rem;
+      font-size: 0.6rem;
+      color: var(--accent-primary);
+      letter-spacing: 0.12em;
+    }
+
+    /* Focus state */
+    .form__input:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 2px rgba(var(--clr-cyan-raw), 0.12);
+    }
+
+    /* Valid state – BEM modifier form__input--valid */
+    .form__input:valid:not(:placeholder-shown) {
+      border-color: #00ff88;
+      box-shadow: 0 0 8px rgba(0,255,136,0.2);
+    }
+
+    /* Invalid state – BEM modifier form__input--invalid */
+    .form__input:invalid:not(:placeholder-shown) {
+      border-color: var(--accent-danger);
+      box-shadow: 0 0 8px rgba(var(--clr-red-raw),0.2);
+    }
+
+    /* State indicator dot */
+    .form__group::after {
+      content: '';
+      position: absolute;
+      right: 1rem; top: 50%;
+      transform: translateY(-50%);
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: transparent;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    /* BEM: form__group--validating state */
+    .form__input:focus ~ .form__group-indicator { background: var(--accent-primary); box-shadow: var(--glow-cyan); }
+    .form__input:valid:not(:placeholder-shown) + .form__group-indicator { background: #00ff88; box-shadow: 0 0 10px #00ff88; }
+    .form__input:invalid:not(:placeholder-shown) + .form__group-indicator { background: var(--accent-danger); box-shadow: 0 0 10px var(--accent-danger); }
+
+    .form__group-indicator {
+      position: absolute;
+      right: 0.9rem; top: 50%; transform: translateY(-50%);
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--border-subtle);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .form__input:focus + .form__group-indicator { background: var(--accent-primary); box-shadow: var(--glow-cyan); }
+    .form__input:valid:not(:placeholder-shown) + .form__group-indicator { background: #00ff88; box-shadow: 0 0 10px #00ff88; }
+    .form__input:invalid:not(:placeholder-shown) + .form__group-indicator { background: var(--accent-danger); box-shadow: 0 0 10px var(--accent-danger); }
+
+    /* BEM: form__checkbox-row */
+    .form__checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* BEM: form__checkbox */
+    .form__checkbox { accent-color: var(--accent-primary); width: 15px; height: 15px; }
+
+    /* BEM: form__submit-btn (Gatekeeper) */
+    .form__submit-btn {
+      background: rgba(var(--clr-white-raw), 0.06);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 0.85rem;
+      cursor: not-allowed;
+      pointer-events: none;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    /* BEM: form__submit-btn--active  →  :has() CSS state machine */
+    .form:has(.form__input:valid):has(.form__checkbox:checked) .form__submit-btn {
+      background: rgba(var(--clr-cyan-raw), 0.12);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: var(--glow-cyan);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 12px rgba(var(--clr-cyan-raw),0.4); }
+      50%       { box-shadow: 0 0 28px rgba(var(--clr-cyan-raw),0.8), 0 0 50px rgba(var(--clr-cyan-raw),0.3); }
+    }
+
+    /* Empty state */
+    .service-list:empty::before {
+      content: 'Niciun serviciu selectat';
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 1rem;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: repeat(2,1fr); }
+      .stats-grid    { grid-template-columns: repeat(2,1fr); }
+      .bottom-grid   { grid-template-columns: 1fr; }
+      .spatial-anchor { width: 320px; height: 220px; }
+      .glitch-text   { font-size: 1.8rem; }
+    }
+    @media (max-width: 560px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .nav__links    { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav class="nav">
+    <a class="nav__logo" href="#">SYS.CONTROL</a>
+    <ul class="nav__links">
+      <li><a href="#">Acasă</a></li>
+      <li><a href="#">Servicii</a></li>
+      <li><a href="#">Lista de Prețuri</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="system-control.html" class="nav__links--active">System Control</a></li>
+    </ul>
+    <button class="nav__dark-toggle" onclick="document.body.classList.toggle('dark-theme')">
+      ◐ Dark Mode
+    </button>
+  </nav>
+
+  <!-- ── PAGE ── -->
+  <main class="page">
+
+    <!-- 1. NEURAL GLASS CENTERPIECE -->
+    <div class="hologram-section">
+      <div class="neural-engine">
+        <div class="spatial-anchor" id="anchor">
+          <!-- Strat 0: Core glow -->
+          <div class="layer core-glow"></div>
+          <!-- Strat 1: Glass chassis -->
+          <div class="layer glass-chassis"></div>
+          <!-- Strat 2: Data interface -->
+          <div class="layer data-interface">
+            <div class="header">SYSTEM_STATUS: ACTIVE</div>
+            <h1 class="glitch-text" data-text="NEURAL_CORE">NEURAL_CORE</h1>
+            <div class="stats">CENTRAL PROCESSING UNIT</div>
+            <div class="status-dots">
+              <span><span class="dot"></span> AI ACTIVE</span>
+              <span><span class="dot orange"></span> SYSTEMS SYNC</span>
+              <span><span class="dot"></span> GPU ONLINE</span>
+            </div>
+          </div>
+          <!-- Strat 3: Orbital node -->
+          <div class="layer orbital-node">
+            <div class="satellite"></div>
+          </div>
+          <!-- Strat 4: Specular highlight -->
+          <div class="layer specular-highlight" id="specular"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. LIVE STATS -->
+    <p class="section-label">Statistici Live</p>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-card__value" id="cnt-orders">47</span>
+        <span class="stat-card__label">Comenzi Azi</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__value" id="cnt-clients">213</span>
+        <span class="stat-card__label">Clienți Activi</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__value" id="cnt-revenue">3840</span>
+        <span class="stat-card__label">Venit (LEI)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__value">99%</span>
+        <span class="stat-card__label">Uptime Sistem</span>
+      </div>
+    </div>
+
+    <!-- 3. SERVICE MODULES (Chained Stagger – Perechea II) -->
+    <p class="section-label">Module Sistem</p>
+    <div class="services-grid">
+      <!-- --i increments 1→6; non-linear delay: i² × 45ms -->
+      <div class="feature-wrapper" style="--i:1">
+        <div class="feature-card">
+          <span class="feature-card__badge">● ACTIV</span>
+          <div class="feature-card__title">Render Engine</div>
+          <div class="feature-card__desc">Procesare grafică în timp real pentru vizualizarea laboratorului.</div>
+          <div class="feature-card__bar"><div class="feature-card__bar-fill" style="width:79%"></div></div>
+        </div>
+      </div>
+
+      <div class="feature-wrapper" style="--i:2">
+        <div class="feature-card">
+          <span class="feature-card__badge">● ACTIV</span>
+          <div class="feature-card__title">Neural Sync</div>
+          <div class="feature-card__desc">Sincronizare date în timp real cu latență sub 0.002ms.</div>
+          <div class="feature-card__bar"><div class="feature-card__bar-fill" style="width:95%"></div></div>
+        </div>
+      </div>
+
+      <div class="feature-wrapper" style="--i:3">
+        <div class="feature-card">
+          <span class="feature-card__badge feature-card__badge--warn">● MENTENANȚĂ</span>
+          <div class="feature-card__title">Auth Gateway</div>
+          <div class="feature-card__desc">Sistem de autentificare multi-factor și control acces.</div>
+          <div class="feature-card__bar"><div class="feature-card__bar-fill" style="width:45%"></div></div>
+        </div>
+      </div>
+
+      <div class="feature-wrapper" style="--i:4">
+        <div class="feature-card">
+          <span class="feature-card__badge">● ACTIV</span>
+          <div class="feature-card__title">GPU Cluster</div>
+          <div class="feature-card__desc">Paralelizare calcule pe 8 nuclee GPU dedicate animațiilor.</div>
+          <div class="feature-card__bar"><div class="feature-card__bar-fill" style="width:88%"></div></div>
+        </div>
+      </div>
+
+      <div class="feature-wrapper" style="--i:5">
+        <div class="feature-card">
+          <span class="feature-card__badge">● ACTIV</span>
+          <div class="feature-card__title">Data Pipeline</div>
+          <div class="feature-card__desc">Flux continuu de procesare și stocare securizată a datelor.</div>
+          <div class="feature-card__bar"><div class="feature-card__bar-fill" style="width:62%"></div></div>
+        </div>
+      </div>
+
+      <div class="feature-wrapper" style="--i:6">
+        <div class="feature-card">
+          <span class="feature-card__badge">● ACTIV</span>
+          <div class="feature-card__title">CDN Shield</div>
+          <div class="feature-card__desc">Distribuție globală conținut cu protecție DDoS activă.</div>
+          <div class="feature-card__bar"><div class="feature-card__bar-fill" style="width:100%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. BOTTOM GRID: Controls + Secure Form -->
+    <div class="bottom-grid">
+
+      <!-- Controls panel -->
+      <div class="controls-card">
+        <p class="section-label" style="margin-bottom:1rem">Controale</p>
+
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-row__label">Notificări comenzi</div>
+            <div class="toggle-row__sub">Alertă la fiecare comandă nouă</div>
+          </div>
+          <label>
+            <input class="toggle-input" type="checkbox" checked/>
+            <span class="toggle-switch"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-row__label">Mod mentenanță</div>
+            <div class="toggle-row__sub">Blochează accesul public temporar</div>
+          </div>
+          <label>
+            <input class="toggle-input" type="checkbox"/>
+            <span class="toggle-switch"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-row__label">Backup automat</div>
+            <div class="toggle-row__sub">Salvare la fiecare 6 ore</div>
+          </div>
+          <label>
+            <input class="toggle-input" type="checkbox" checked/>
+            <span class="toggle-switch"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-row__label">GPU Boost Mode</div>
+            <div class="toggle-row__sub">Prioritizare animații complexe</div>
+          </div>
+          <label>
+            <input class="toggle-input" type="checkbox" checked/>
+            <span class="toggle-switch"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Secure Access Form – BEM + CSS State Machine -->
+      <div class="form-section">
+        <p class="section-label" style="margin-bottom:1rem">Acces Securizat</p>
+
+        <!-- BEM: block = form -->
+        <form class="form" onsubmit="return false;">
+
+          <!-- BEM: form__group -->
+          <div class="form__group">
+            <input
+              class="form__input"
+              type="text"
+              id="access-user"
+              name="access-user"
+              placeholder=" "
+              required
+              minlength="3"
+              autocomplete="username"
+            />
+            <span class="form__group-indicator"></span>
+            <label class="form__label" for="access-user">UTILIZATOR</label>
+          </div>
+
+          <!-- BEM: form__group -->
+          <div class="form__group">
+            <input
+              class="form__input"
+              type="password"
+              id="access-pass"
+              name="access-pass"
+              placeholder=" "
+              required
+              minlength="6"
+              autocomplete="current-password"
+            />
+            <span class="form__group-indicator"></span>
+            <label class="form__label" for="access-pass">PAROLĂ</label>
+          </div>
+
+          <!-- BEM: form__checkbox-row -->
+          <label class="form__checkbox-row">
+            <input class="form__checkbox" type="checkbox" required/>
+            Accept Termenii și Condițiile de acces
+          </label>
+
+          <!-- BEM: form__submit-btn  (gatekeeper – activat doar prin CSS :has + :valid + :checked) -->
+          <button class="form__submit-btn" type="submit">
+            ⬡ &nbsp;Inițializare Acces
+          </button>
+
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       JAVASCRIPT – Specular Tracking + Glitch offset + Stats counter
+       ============================================================ -->
+  <script>
+    // --- Specular Tracking + 3D Tilt (Perechea III) ---
+    const anchor   = document.getElementById('anchor');
+    const specular = document.getElementById('specular');
+    let lastX = 0, lastY = 0, lastTime = Date.now();
+
+    document.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      const dt  = now - lastTime || 1;
+
+      // Mouse velocity → chromatic aberration intensity
+      const vx     = Math.abs(e.clientX - lastX) / dt;
+      const vy     = Math.abs(e.clientY - lastY) / dt;
+      const speed  = Math.min(vx + vy, 2);
+      const glitch = (speed * 4).toFixed(2);
+
+      lastX = e.clientX; lastY = e.clientY; lastTime = now;
+
+      // 3D rotation based on mouse position relative to viewport center
+      const cx  = window.innerWidth  / 2;
+      const cy  = window.innerHeight / 2;
+      const rx  = ((e.clientY - cy) / cy * -8).toFixed(2);
+      const ry  = ((e.clientX - cx) / cx *  8).toFixed(2);
+
+      // Ray-traced shadow: shadow shifts with rotation
+      const shadowX = (parseFloat(ry) * 2).toFixed(1);
+      const shadowY = (parseFloat(rx) * -1.5).toFixed(1);
+
+      anchor.style.setProperty('--rx', rx + 'deg');
+      anchor.style.setProperty('--ry', ry + 'deg');
+      anchor.style.setProperty('--glitch', glitch + 'px');
+
+      // Specular highlight moves OPPOSITE to mouse (fixed light source illusion)
+      const specX = (100 - (e.clientX / window.innerWidth  * 100)).toFixed(1);
+      const specY = (100 - (e.clientY / window.innerHeight * 100)).toFixed(1);
+      anchor.style.setProperty('--spec-x', specX + '%');
+      anchor.style.setProperty('--spec-y', specY + '%');
+
+      // Update specular div directly for smooth transition
+      specular.style.background = `radial-gradient(circle at ${specX}% ${specY}%,
+        rgba(255,255,255,0.07) 0%, transparent 55%)`;
+    });
+
+    // --- Live counter tick (cosmetic) ---
+    function tick(el, target, speed) {
+      let val = parseInt(el.textContent);
+      const step = Math.ceil(Math.abs(target - val) * speed);
+      const interval = setInterval(() => {
+        const diff = target - val;
+        if (Math.abs(diff) <= step) { el.textContent = target; clearInterval(interval); return; }
+        val += diff > 0 ? step : -step;
+        el.textContent = val;
+      }, 60);
+    }
+
+    setTimeout(() => {
+      tick(document.getElementById('cnt-orders'),  Math.floor(Math.random()*20)+40, 0.05);
+      tick(document.getElementById('cnt-clients'), Math.floor(Math.random()*30)+200, 0.03);
+    }, 2500);
+  </script>
+
+</body>
+</html>

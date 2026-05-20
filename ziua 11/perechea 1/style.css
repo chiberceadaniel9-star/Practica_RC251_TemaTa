@@ -1,0 +1,209 @@
+/* =========================================================================
+   Cross-Browser Audit & Feature Queries
+   Designed by: Chibercea Daniel | Data: 19.05.2026
+   Ziua 11 - Perechea 1
+   ========================================================================= */
+
+/* =========================================================================
+   RESET & BAZE GLOBALE
+   ========================================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0f172a;
+  color: #f8fafc;
+  min-height: 100vh;
+  padding: 0 0 60px;
+}
+
+/* =========================================================================
+   HEADER
+   ========================================================================= */
+.page-header {
+  text-align: center;
+  padding: 60px 20px 40px;
+}
+
+.page-header__label {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+.page-header__title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #f8fafc;
+  margin-bottom: 10px;
+}
+
+.page-header__subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  letter-spacing: 0.05em;
+}
+
+/* =========================================================================
+   FOOTER
+   ========================================================================= */
+.page-footer {
+  text-align: center;
+  padding: 30px 20px 0;
+  font-size: 0.8rem;
+  color: #475569;
+  letter-spacing: 0.03em;
+}
+
+/* =========================================================================
+   1. STILURI DE BAZA & FALLBACK (Compatibilitate Universala - Flexbox)
+      Acest strat functioneaza pe ORICE browser, inclusiv cele foarte vechi.
+      Folosim display: flex ca baza sigura.
+   ========================================================================= */
+.adaptive-showcase {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 40px;
+  background-color: #0f172a; /* Fundal solid inchis */
+}
+
+.adaptive-card {
+  flex: 1 1 calc(33.333% - 20px);
+  min-width: 280px;
+  background-color: #1e293b;        /* Culoare solida fara transparenta sau blur */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 30px;
+  color: #f8fafc;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.adaptive-card:hover {
+  transform: translateY(-6px);
+}
+
+.adaptive-card__header {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #e2e8f0;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.adaptive-card__body {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #94a3b8;
+}
+
+/* =========================================================================
+   2. REFORMARE LA GRID (Browsere Moderne - Detectie display: grid)
+      @supports testeaza daca browserul intelege CSS Grid.
+      Daca DA => inlocuim flex cu grid pentru un layout 2D mai precis.
+      Daca NU => ramane fallback-ul cu flex de mai sus.
+   ========================================================================= */
+@supports (display: grid) {
+  .adaptive-showcase {
+    display: grid;
+    /* Grid auto-adaptabil: coloane de minim 300px, maxim 1fr */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+
+  .adaptive-card {
+    /* Resetam latimile calculate pentru Flexbox deoarece Grid preia controlul */
+    flex: none;
+    min-width: 0;
+  }
+}
+
+/* =========================================================================
+   3. REFORMARE OPTICA (Detectie backdrop-filter pentru Glassmorphism)
+      @supports testeaza daca browserul suporta efectul de blur pe fundal.
+      Daca DA => cardul devine translucid si "de sticla".
+      Daca NU => ramane cardul solid #1e293b din fallback.
+   ========================================================================= */
+@supports (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) {
+  .adaptive-card {
+    /* Transformam cardul solid intr-un element refractive ultra-modern */
+    background-color: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .adaptive-showcase {
+    /* Gradient complex de fundal pentru a evidentia efectul de blur */
+    background: radial-gradient(circle at top left, #1e1b4b, #090514);
+  }
+}
+
+/* =========================================================================
+   4. SARCINA OBLIGATORIE: @supports not
+      Acest bloc se activeaza NUMAI pe browserele care NU suporta blur.
+      Compensam lipsa de adancime vizuala cu umbre si borduri mai intense.
+   ========================================================================= */
+@supports not (backdrop-filter: blur(10px)) {
+  .adaptive-card {
+    /* Umbra intensa pentru a simula adancimea vizuala */
+    box-shadow:
+      0 4px 6px rgba(0, 0, 0, 0.4),
+      0 10px 25px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    /* Gradient subtil pe card pentru adancime */
+    background-image: linear-gradient(
+      135deg,
+      #1e293b 0%,
+      #162032 100%
+    );
+  }
+
+  .adaptive-showcase {
+    /* Imagine de fundal alternativa - pattern geometric subtil */
+    background-color: #0f172a;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(30, 27, 75, 0.6) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(15, 23, 42, 0.8) 0%, transparent 50%);
+  }
+}
+
+/* =========================================================================
+   5. BONUS: Subgrid Fallback Plan
+      Testeaza daca browserul suporta subgrid pentru alinierea interna
+      a elementelor din carduri pe aceleasi randuri.
+   ========================================================================= */
+@supports (grid-template-rows: subgrid) {
+  .adaptive-card {
+    /* Activam subgrid pentru alinierea titlului si corpului */
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+  }
+
+  .adaptive-card__header {
+    /* Titlul se aliniaza pe primul rand al subgrid-ului */
+    align-self: start;
+  }
+
+  .adaptive-card__body {
+    /* Corpul se aliniaza pe al doilea rand */
+    align-self: start;
+  }
+}

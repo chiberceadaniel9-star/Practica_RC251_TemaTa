@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Poiana Verde - Restaurant Tradițional Românesc</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Restaurant tradițional românesc La Poiana Verde din Șoldănești, Moldova. Mâncăruri autentice, atmosferă caldă, evenimente speciale. Rezervări: 068847838">
+    <meta name="keywords" content="restaurant, Șoldănești, Moldova, mâncare tradițională, nunți, botezuri, rezervare">
+    <meta name="author" content="Chibercea Daniel">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="La Poiana Verde - Restaurant Tradițional">
+    <meta property="og:description" content="Gusturi autentice într-o atmosferă caldă. Restaurant tradițional din Șoldănești, Moldova.">
+    <meta property="og:type" content="website">
+
+    <!-- Quality Assurance: Lighthouse Core Web Vitals audited by: Chibercea Daniel | 19.05.2026 -->
+
+    <!-- SHA-256 Digital Signature - Release Integrity by: Chibercea Daniel | 20.05.2026 -->
+    <meta name="x-software-signature-sha256" content="485504361F3F0AEAF4E55EFC00365050EA63DD78E34AC83BD4F9F1C6686641B3">
+
+    <!-- Preload imaginii hero pentru LCP mai bun -->
+    <link rel="preload" as="image" href="img/image.png">
+
+    <style>
+        /* ===== FONT DISPLAY SWAP - previne FOIT ===== */
+        @font-face {
+            font-family: 'Arial';
+            font-display: swap;
+        }
+
+        :root {
+            --theme-color: #1a7a42;
+            --theme-hover: #145e33;
+            --bg-light: #f9f9f9;
+            --text-dark: #222;
+            --white: #fff;
+            --glass: rgba(255,255,255,0.2);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        /* ===== HEADER ===== */
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: var(--theme-color);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-logo img {
+            height: 50px;
+            width: 50px;
+            object-fit: contain;
+        }
+        .header-title h1 {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            font-size: 0.8rem;
+            text-align: center;
+        }
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            background: var(--glass);
+            padding: 10px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+        .main-nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+        .main-nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 60px 5%;
+            background: white;
+        }
+        .hero-text h2 {
+            color: var(--theme-color);
+            margin-bottom: 20px;
+            line-height: 1.4;
+            font-size: 1.8rem;
+        }
+        .hero-text p {
+            font-size: 1rem;
+            color: #444;
+            line-height: 1.6;
+        }
+        .hero-image img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        /* ===== SERVICII ===== */
+        .servicii {
+            padding: 60px 5%;
+            background: #eeeeee;
+        }
+        .servicii h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--theme-color);
+            font-size: 1.8rem;
+        }
+        .cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            flex: 1 1 280px;
+            max-width: 350px;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .card-body h3 {
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .card-body p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* ===== TABEL PRETURI ===== */
+        .proiect-final {
+            padding: 60px 5%;
+            background: white;
+        }
+        .proiect-final h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--theme-color);
+            font-size: 1.8rem;
+        }
+        .tabel-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .tabel-final {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 700px;
+        }
+        .tabel-final th,
+        .tabel-final td {
+            border: 1px solid #ddd;
+            padding: 14px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .tabel-final th {
+            background-color: var(--theme-color);
+            color: white;
+            font-weight: bold;
+        }
+        .tabel-final tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+        .tabel-final tr:hover {
+            background-color: #e8f5e9;
+        }
+
+        /* ===== DESPRE ===== */
+        .despre {
+            padding: 60px 5%;
+            background: white;
+        }
+        .despre h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--theme-color);
+            font-size: 1.8rem;
+        }
+        .despre-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .despre-text {
+            flex: 1;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #444;
+        }
+        .despre-image img {
+            width: 300px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        /* ===== MULTIMEDIA ===== */
+        .multimedia-section {
+            padding: 60px 5%;
+            background: #f8f9fa;
+        }
+        .multimedia-section h2 {
+            text-align: center;
+            color: var(--theme-color);
+            margin-bottom: 40px;
+            font-size: 1.8rem;
+        }
+        .multimedia-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+        }
+        .media-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .media-box h3 {
+            color: var(--theme-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 3px dashed var(--theme-color);
+        }
+        .iframe-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ===== REZERVARE ===== */
+        .rezervare-section {
+            padding: 80px 5%;
+            background: var(--theme-color);
+        }
+        .rezervare-section h2 {
+            color: white;
+            margin-bottom: 40px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        .rezervare-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        .formular-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        fieldset {
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+        }
+        legend {
+            padding: 0 10px;
+            font-weight: bold;
+            color: var(--theme-color);
+        }
+        .camp {
+            margin-bottom: 20px;
+        }
+        .camp label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            color: var(--text-dark);
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--theme-color);
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: var(--theme-color);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background: var(--theme-hover);
+        }
+        .contact-box {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .contact-info {
+            margin-top: 15px;
+        }
+        .contact-info h3 {
+            color: var(--theme-color);
+            margin-bottom: 10px;
+        }
+        .contact-info p {
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            color: #444;
+        }
+        .contact-box iframe {
+            display: block;
+            width: 100%;
+            height: 220px;
+            border: none;
+            border-radius: 12px;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: #1a1a1a;
+            color: #ddd;
+            padding: 40px 5%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            text-align: center;
+            gap: 20px;
+        }
+        .site-footer h4 {
+            color: white;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        .site-footer p {
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        .site-footer a {
+            color: #5dba7d;
+            display: block;
+            margin-top: 6px;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .site-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .rezervare-layout { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; }
+            .hero-image img { width: 100%; height: 220px; }
+            .despre-container { flex-direction: column; text-align: center; }
+            .despre-image img { width: 100%; }
+            .site-header { flex-direction: column; gap: 12px; padding: 12px 5%; }
+            .main-nav ul { gap: 12px; padding: 8px 15px; }
+            .multimedia-container { grid-template-columns: 1fr; }
+            .service-card { flex: 1 1 100%; max-width: 95%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-logo">
+            <img src="img/logo.png" alt="Logo La Poiana Verde" width="50" height="50">
+        </div>
+        <div class="header-title">
+            <h1>LA POIANA VERDE</h1>
+            <p class="subtitle">RESTAURANT</p>
+        </div>
+        <nav class="main-nav" aria-label="Navigare principală">
+            <ul>
+                <li><a href="#hero">Acasă</a></li>
+                <li><a href="#servicii">Servicii</a></li>
+                <li><a href="#proiect-final">Prețuri/Orar</a></li>
+                <li><a href="#rezervare">Rezervare</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero" aria-labelledby="hero-title">
+            <div class="hero-text">
+                <h2 id="hero-title">Bine ați venit la Poiana Verde<br>Gusturi autentice într-o atmosferă caldă</h2>
+                <p>Restaurant tradițional românesc | Chef autentic | Atmosferă elegantă</p>
+            </div>
+            <div class="hero-image">
+                <img src="img/image.png" alt="Interior restaurant La Poiana Verde" width="300" height="300" fetchpriority="high">
+            </div>
+        </section>
+
+        <section id="servicii" class="servicii" aria-labelledby="servicii-title">
+            <h2 id="servicii-title">Serviciile Noastre</h2>
+            <!-- Layout Flexbox de: Chibercea Daniel -->
+            <div class="cards-grid">
+                <article class="service-card">
+                    <img src="img/mancare.png" alt="Mâncăruri tradiționale românești" width="350" height="200" loading="lazy">
+                    <div class="card-body">
+                        <h3>Mâncăruri Tradiționale</h3>
+                        <p>Preparatele noastre sunt gătite după rețete autentice românești.</p>
+                    </div>
+                </article>
+                <article class="service-card">
+                    <img src="img/atmosfera.png" alt="Atmosferă caldă și elegantă" width="350" height="200" loading="lazy">
+                    <div class="card-body">
+                        <h3>Atmosferă Caldă</h3>
+                        <p>O experiență relaxantă într-un decor elegant și confortabil.</p>
+                    </div>
+                </article>
+                <article class="service-card">
+                    <img src="img/image.png" alt="Evenimente speciale - nunți și botezuri" width="350" height="200" loading="lazy">
+                    <div class="card-body">
+                        <h3>Evenimente Speciale</h3>
+                        <p>Organizăm nunți, botezuri și petreceri private memorabile.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="proiect-final" class="proiect-final" aria-labelledby="preturi-title">
+            <h2 id="preturi-title">Lista de Prețuri / Orar Consultații</h2>
+            <div class="tabel-container">
+                <table class="tabel-final">
+                    <caption style="display:none">Lista de prețuri și orar servicii La Poiana Verde</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Departament</th>
+                            <th scope="col">Serviciu</th>
+                            <th scope="col">Cantitate/Durată</th>
+                            <th scope="col">Orar L-V</th>
+                            <th scope="col">Orar S-D</th>
+                            <th scope="col">Preț (MDL)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2"><strong>Bucătărie</strong></td>
+                            <td>Meniu Degustare</td>
+                            <td>600g</td>
+                            <td>12:00 - 20:00</td>
+                            <td>10:00 - 22:00</td>
+                            <td>450</td>
+                        </tr>
+                        <tr>
+                            <td>Platou Tradițional</td>
+                            <td>1.2kg</td>
+                            <td>Zilnic</td>
+                            <td>Zilnic</td>
+                            <td>320</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5"><strong>Pachet Promoțional: Nuntă Completă</strong></td>
+                            <td>850 / pers</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"><strong>Evenimente</strong></td>
+                            <td>Consultanță Chef</td>
+                            <td>1h</td>
+                            <td>09:00 - 15:00</td>
+                            <td>Închis</td>
+                            <td>Gratuit</td>
+                        </tr>
+                        <tr>
+                            <td>Rezervare Sală</td>
+                            <td>-</td>
+                            <td>Non-stop</td>
+                            <td>Non-stop</td>
+                            <td>Variabil</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bar</strong></td>
+                            <td>Degustare Vinuri</td>
+                            <td>4 probe</td>
+                            <td>18:00 - 23:00</td>
+                            <td>14:00 - 01:00</td>
+                            <td>250</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="despre" aria-labelledby="despre-title">
+            <h2 id="despre-title">Despre Noi</h2>
+            <div class="despre-container">
+                <p class="despre-text">
+                    La Poiana Verde folosim ingrediente locale și rețete tradiționale pentru a oferi o experiență culinară autentică. Fiecare preparat este gătit cu pasiune și dedicație, păstrând savoarea bucătăriei românești tradiționale.
+                </p>
+                <div class="despre-image">
+                    <img src="img/image.png" alt="Interior elegant al restaurantului La Poiana Verde" width="300" height="220" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <section id="multimedia" class="multimedia-section" aria-labelledby="multimedia-title">
+            <h2 id="multimedia-title">🎥 Prezentare Video &amp; Locație</h2>
+            <div class="multimedia-container">
+                <div class="media-box">
+                    <h3>🎬 Video de Prezentare</h3>
+                    <!-- Interface Hardening: Sandboxed Iframes & Outbound Isolation by: Chibercea Daniel | Data: 19.05.2026 -->
+                    <div class="iframe-wrapper">
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/FrJtfBevi4s"
+                            title="Video Prezentare La Poiana Verde"
+                            sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            loading="lazy"></iframe>
+                    </div>
+                </div>
+                <div class="media-box">
+                    <h3>📍 Locația Noastră - Șoldănești</h3>
+                    <!-- Interface Hardening: Sandboxed Iframes & Outbound Isolation by: Chibercea Daniel | Data: 19.05.2026 -->
+                    <div class="iframe-wrapper">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2590.5!2d28.1234!3d47.8123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c5f5f5f5f5f5f5%3A0x123456789abcdef!2s%C8%98old%C4%83ne%C8%99ti%2C%20Moldova!5e0!3m2!1sro!2smd!4v1234567890"
+                            title="Locatie Soldanesti Moldova"
+                            loading="lazy"
+                            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+            <!-- Multimedia integrată de: Chibercea Daniel -->
+        </section>
+
+        <section id="rezervare" class="rezervare-section" aria-labelledby="rezervare-title">
+            <h2 id="rezervare-title">Fă o Rezervare</h2>
+            <div class="rezervare-layout">
+                <div class="formular-box">
+                    <form id="bookingForm" novalidate>
+                        <fieldset>
+                            <legend>Date Personale</legend>
+                            <div class="camp">
+                                <label for="nume">Nume Complet</label>
+                                <input type="text" id="nume" name="nume" placeholder="Daniel Chibercea" autocomplete="name" required>
+                            </div>
+                            <div class="camp">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="exemplu@gmail.com" autocomplete="email" required>
+                            </div>
+                            <div class="camp">
+                                <label for="telefon">Telefon</label>
+                                <input type="tel" id="telefon" name="telefon" placeholder="068847838" autocomplete="tel" required>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Detalii Rezervare</legend>
+                            <div class="camp">
+                                <label for="data">Data Vizitei</label>
+                                <input type="date" id="data" name="data" min="2026-05-01" max="2026-12-31" required>
+                            </div>
+                            <div class="camp">
+                                <label for="eveniment">Tip Eveniment</label>
+                                <select id="eveniment" name="eveniment" required>
+                                    <option value="">Selectează</option>
+                                    <option value="normal">Rezervare Normală</option>
+                                    <option value="romantic">Cină Romantică</option>
+                                    <option value="nunta">Nuntă</option>
+                                    <option value="botez">Botez</option>
+                                </select>
+                            </div>
+                            <div class="camp">
+                                <label for="culoare">Personalizează Tema</label>
+                                <input type="color" id="culoare" name="culoare" value="#1a7a42">
+                            </div>
+                        </fieldset>
+                        <button type="submit" class="btn-submit">Trimite Rezervarea</button>
+                    </form>
+                </div>
+                <aside class="contact-box" aria-label="Informații contact și hartă">
+                    <!-- Interface Hardening: Sandboxed Iframes & Outbound Isolation by: Chibercea Daniel | Data: 19.05.2026 -->
+                    <iframe
+                        src="https://www.google.com/maps?q=Soldanesti,Moldova&output=embed"
+                        title="Harta Soldanesti Moldova"
+                        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        loading="lazy"></iframe>
+                    <div class="contact-info">
+                        <h3>Date Contact</h3>
+                        <p><strong>Telefon:</strong> <a href="tel:068847838" style="color:var(--theme-color)">068847838</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:chiberceadaniel9@gmail.com" style="color:var(--theme-color)">chiberceadaniel9@gmail.com</a></p>
+                        <p><strong>Adresă:</strong> Șoldănești, Moldova</p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="site-footer" aria-label="Informații de contact">
+        <div><h4>Telefon</h4><p>068847838</p></div>
+        <div><h4>Email</h4><p>chiberceadaniel9@gmail.com</p></div>
+        <div><h4>Adresă</h4><p>Șoldănești, Moldova</p></div>
+        <div>
+            <h4>Link-uri Utile</h4>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub Oficial</a>
+            <a href="https://utm.md" target="_blank" rel="noopener noreferrer">Portal UTM</a>
+        </div>
+        <div>
+            <h4>Confidențialitate</h4>
+            <label style="font-size:0.85rem; cursor:pointer; color:#bbb;">
+                <input type="checkbox" id="gdpr-optout" style="margin-right:6px;">
+                Refuză cookies/telemetrie
+            </label>
+        </div>
+    </footer>
+
+    <script defer src="../../telemetry.js"></script>
+
+    <script>
+        const colorInput = document.getElementById("culoare");
+        if (colorInput) {
+            colorInput.addEventListener("input", function() {
+                document.documentElement.style.setProperty("--theme-color", this.value);
+            });
+        }
+        const bookingForm = document.getElementById("bookingForm");
+        if (bookingForm) {
+            bookingForm.addEventListener("submit", function(e) {
+                e.preventDefault();
+                alert("Rezervarea a fost trimisă cu succes!");
+            });
+        }
+    </script>
+
+</body>
+</html>

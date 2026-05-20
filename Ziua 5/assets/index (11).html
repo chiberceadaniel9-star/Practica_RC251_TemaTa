@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ziua 5 – Secțiunea Contact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       CSS VARIABLES & RESET
+    ============================================================ */
+    :root {
+      --clr-bg:       #0f1117;
+      --clr-surface:  #1a1d27;
+      --clr-card:     #22263a;
+      --clr-accent:   #f5a623;
+      --clr-accent2:  #e07b39;
+      --clr-text:     #e8e9f3;
+      --clr-muted:    #7c7f9c;
+      --clr-border:   #2e3251;
+      --clr-error:    #ff6b6b;
+      --clr-success:  #51cf66;
+      --radius-lg:    16px;
+      --radius-md:    10px;
+      --radius-sm:    6px;
+      --shadow:       0 8px 48px rgba(0,0,0,.45);
+      --transition:   0.3s cubic-bezier(.4,0,.2,1);
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+    }
+
+    /* ============================================================
+       HEADER / NAV (demo)
+    ============================================================ */
+    header {
+      padding: 1.4rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--clr-border);
+      background: var(--clr-surface);
+    }
+
+    header .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--clr-accent);
+      letter-spacing: -0.5px;
+    }
+
+    nav a {
+      color: var(--clr-muted);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color var(--transition);
+    }
+    nav a:hover { color: var(--clr-accent); }
+
+    /* ============================================================
+       SECTION HERO (contact heading)
+    ============================================================ */
+    .section-hero {
+      text-align: center;
+      padding: 4rem 2rem 2.5rem;
+    }
+
+    .section-hero h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--clr-text);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-hero h2 em {
+      color: var(--clr-accent);
+      font-style: italic;
+    }
+
+    .section-hero p {
+      color: var(--clr-muted);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       CONTACT GRID (CSS Grid – 2/3 formular + 1/3 info)
+    ============================================================ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto 4rem;
+      padding: 0 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       CARD STILIZAT
+    ============================================================ */
+    .card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* ============================================================
+       FIELDSET / LEGEND
+    ============================================================ */
+    fieldset {
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 1.4rem 1.4rem 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    legend {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--clr-accent);
+      padding: 0 0.6rem;
+    }
+
+    /* ============================================================
+       FLOATING LABEL INPUTS
+    ============================================================ */
+    .field {
+      position: relative;
+      margin-bottom: 1.4rem;
+    }
+
+    .field:last-child { margin-bottom: 0; }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: var(--clr-surface);
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      color: var(--clr-text);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 1.1rem 1rem 0.4rem;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .field select {
+      padding: 0.75rem 1rem;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237c7f9c' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      cursor: pointer;
+    }
+
+    .field select option {
+      background: var(--clr-surface);
+      color: var(--clr-text);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .field label {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      color: var(--clr-muted);
+      pointer-events: none;
+      transition: all var(--transition);
+    }
+
+    /* Textarea label fix */
+    .field.area label { top: 1.15rem; transform: none; }
+
+    /* Select label fix */
+    .field.sel label {
+      top: -0.55rem;
+      transform: none;
+      font-size: 0.72rem;
+      color: var(--clr-accent);
+      font-weight: 600;
+      background: var(--clr-card);
+      padding: 0 4px;
+    }
+
+    /* Floating label trigger */
+    .field input:focus + label,
+    .field input:not(:placeholder-shown) + label,
+    .field textarea:focus + label,
+    .field textarea:not(:placeholder-shown) + label {
+      top: 0.35rem;
+      transform: none;
+      font-size: 0.72rem;
+      color: var(--clr-accent);
+      font-weight: 600;
+    }
+
+    /* Focus ring */
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--clr-accent);
+      box-shadow: 0 0 0 3px rgba(245,166,35,.12);
+    }
+
+    /* Valid state */
+    .field input:valid:not(:placeholder-shown) { border-color: var(--clr-success); }
+
+    /* Invalid state */
+    .field input:invalid:not(:placeholder-shown) { border-color: var(--clr-error); }
+
+    /* ===== TOOLTIP EROARE CSS-ONLY ===== */
+    .error-msg {
+      display: none;
+      font-size: 0.74rem;
+      color: var(--clr-error);
+      margin-top: 0.3rem;
+      padding-left: 0.4rem;
+    }
+
+    .field input:focus:invalid:not(:placeholder-shown) ~ .error-msg { display: block; }
+
+    /* ===== CHAR COUNTER ===== */
+    .char-counter {
+      text-align: right;
+      font-size: 0.72rem;
+      color: var(--clr-muted);
+      margin-top: 0.3rem;
+    }
+    .char-counter.warn { color: var(--clr-error); }
+
+    /* ============================================================
+       SUBMIT BUTTON
+    ============================================================ */
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
+      color: #0f1117;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s, box-shadow var(--transition), filter var(--transition);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(245,166,35,.35);
+      filter: brightness(1.07);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+      filter: brightness(0.95);
+    }
+
+    /* Loading shimmer */
+    .btn-submit::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    .btn-submit:hover::after {
+      animation: btn-shimmer 1.1s infinite;
+      opacity: 1;
+    }
+
+    @keyframes btn-shimmer {
+      to { transform: translateX(100%); }
+    }
+
+    /* ============================================================
+       SIDEBAR – Detalii Contact + Harta
+    ============================================================ */
+    .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .contact-info h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--clr-accent);
+      margin-bottom: 1rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .info-item .icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(245,166,35,.12);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .info-item .text strong {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--clr-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.15rem;
+    }
+
+    .info-item .text span {
+      font-size: 0.9rem;
+      color: var(--clr-text);
+    }
+
+    .map-wrapper {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--clr-border);
+    }
+
+    .map-wrapper iframe {
+      width: 100%;
+      height: 200px;
+      display: block;
+      border: none;
+      filter: grayscale(1) invert(0.9) contrast(0.9);
+    }
+
+    /* ============================================================
+       FEEDBACK MESAJ SUCCES
+    ============================================================ */
+    .success-banner {
+      display: none;
+      background: rgba(81,207,102,.1);
+      border: 1px solid var(--clr-success);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.2rem;
+      color: var(--clr-success);
+      font-weight: 600;
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--clr-muted);
+      font-size: 0.82rem;
+      border-top: 1px solid var(--clr-border);
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Ziua&nbsp;5</div>
+  <nav>
+    <a href="#">Acasă</a>
+    <a href="#">Portofoliu</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="section-hero">
+  <h2>Ia <em>legătura</em> cu noi</h2>
+  <p>Completează formularul de mai jos sau găsește-ne direct la datele de contact din dreapta.</p>
+</div>
+
+<!-- CONTACT GRID -->
+<section class="contact-grid" id="contact">
+
+  <!-- ===== COLOANA 1 – FORMULAR (2/3) ===== -->
+  <div class="card">
+
+    <!-- FIELDSET 1: Date Personale -->
+    <fieldset>
+      <legend>Date Personale</legend>
+
+      <div class="field">
+        <input type="text" id="nume" name="nume" placeholder=" " required minlength="2" autocomplete="name" />
+        <label for="nume">Nume complet</label>
+        <span class="error-msg">Introduceți cel puțin 2 caractere.</span>
+      </div>
+
+      <div class="field">
+        <input type="email" id="email" name="email" placeholder=" " required autocomplete="email" />
+        <label for="email">Adresă email</label>
+        <span class="error-msg">Introduceți un email valid (ex: user@domeniu.ro).</span>
+      </div>
+
+      <div class="field">
+        <input type="tel" id="telefon" name="telefon" placeholder=" "
+               pattern="[0-9\s\+\-]{7,15}" autocomplete="tel" />
+        <label for="telefon">Telefon (opțional)</label>
+        <span class="error-msg">Format acceptat: cifre, spații, +, –</span>
+      </div>
+    </fieldset>
+
+    <!-- FIELDSET 2: Mesaj -->
+    <fieldset>
+      <legend>Mesaj &amp; Subiect</legend>
+
+      <!-- SELECT stilizat -->
+      <div class="field sel">
+        <select id="subiect" name="subiect" autocomplete="off">
+          <option value="" disabled selected>Alege subiectul…</option>
+          <option value="colaborare">Colaborare</option>
+          <option value="suport">Suport tehnic</option>
+          <option value="oferta">Solicitare ofertă</option>
+          <option value="altele">Altele</option>
+        </select>
+        <label for="subiect">Subiect</label>
+      </div>
+
+      <!-- TEXTAREA cu contor caractere -->
+      <div class="field area">
+        <textarea id="mesaj" name="mesaj" placeholder=" " required
+                  maxlength="500" autocomplete="off"></textarea>
+        <label for="mesaj">Mesajul tău</label>
+        <div class="char-counter" id="charCounter">0 / 500</div>
+      </div>
+    </fieldset>
+
+    <button type="button" class="btn-submit" id="btnSubmit">✉ Trimite Mesajul</button>
+    <div class="success-banner" id="successBanner">✅ Mesajul a fost trimis cu succes!</div>
+  </div><!-- /card formular -->
+
+  <!-- ===== COLOANA 2 – SIDEBAR (1/3) ===== -->
+  <div class="sidebar">
+
+    <div class="card contact-info">
+      <h3>📍 Date de Contact</h3>
+
+      <div class="info-item">
+        <div class="icon">🏢</div>
+        <div class="text">
+          <strong>Adresă</strong>
+          <span>Str. Ștefan cel Mare 1,<br/>Chișinău, MD-2001</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="icon">📧</div>
+        <div class="text">
+          <strong>Email</strong>
+          <span>contact@ziua5.md</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="icon">📞</div>
+        <div class="text">
+          <strong>Telefon</strong>
+          <span>+373 22 000 000</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="icon">⏰</div>
+        <div class="text">
+          <strong>Program</strong>
+          <span>Lun–Vin, 09:00–17:00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Harta iFrame -->
+    <div class="card">
+      <h3 style="font-family:var(--font-display);font-size:1rem;color:var(--clr-accent);margin-bottom:0.8rem;">🗺 Locație</h3>
+      <div class="map-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2720.5!2d28.8293!3d47.0245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97c3628b769a1%3A0x37d1d6305749dd3!2sStefan%20cel%20Mare%20Blvd%2C%20Chi%C8%99in%C4%83u!5e0!3m2!1sro!2smd!4v1234567890"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Locație Chișinău">
+        </iframe>
+      </div>
+    </div>
+
+  </div><!-- /sidebar -->
+
+</section><!-- /contact-grid -->
+
+<footer>
+  &copy; 2026 Ziua 5 – Stagiu Web Design | Toate drepturile rezervate
+</footer>
+
+<script>
+  // ---- Contor caractere textarea ----
+  const mesaj = document.getElementById('mesaj');
+  const counter = document.getElementById('charCounter');
+
+  mesaj.addEventListener('input', () => {
+    const len = mesaj.value.length;
+    const max = parseInt(mesaj.getAttribute('maxlength'));
+    counter.textContent = `${len} / ${max}`;
+    counter.classList.toggle('warn', len > max * 0.85);
+  });
+
+  // ---- Submit simulat ----
+  document.getElementById('btnSubmit').addEventListener('click', () => {
+    const emailInput = document.getElementById('email');
+    const numeInput  = document.getElementById('nume');
+    const mesajInput = document.getElementById('mesaj');
+
+    if (!emailInput.validity.valid || !numeInput.validity.valid || !mesajInput.value.trim()) {
+      alert('Vă rugăm completați corect toate câmpurile obligatorii!');
+      return;
+    }
+
+    document.getElementById('successBanner').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('successBanner').style.display = 'none';
+    }, 4000);
+  });
+</script>
+
+</body>
+</html>

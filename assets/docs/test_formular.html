@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laborator Formular</title>
+
+    <style>
+
+        :root{
+            --theme-color: #3498db;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background: var(--theme-color);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            transition:0.3s;
+        }
+
+        .formular{
+            width:400px;
+            background:white;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 0 20px rgba(0,0,0,0.2);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:25px;
+            color:var(--theme-color);
+        }
+
+        .camp{
+            margin-bottom:20px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:8px;
+            font-weight:bold;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            border:2px solid #ccc;
+            border-radius:10px;
+            font-size:15px;
+            transition:0.3s;
+        }
+
+        input:valid{
+            border-color:green;
+        }
+
+        input:invalid:not(:placeholder-shown){
+            border-color:red;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:10px;
+            background:var(--theme-color);
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            opacity:0.9;
+        }
+
+        .info{
+            margin-top:5px;
+            font-size:13px;
+            color:#666;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="formular">
+
+        <h1>Formular Înregistrare</h1>
+
+        <form>
+
+            <!-- USERNAME -->
+            <div class="camp">
+                <label>Username</label>
+
+                <input 
+                    type="text"
+                    placeholder="username"
+                    required
+                    minlength="5"
+                    pattern="[a-z0-9]{5,}"
+                >
+
+                <div class="info">
+                    Minim 5 caractere, doar litere mici și cifre.
+                </div>
+            </div>
+
+            <!-- PAROLA -->
+            <div class="camp">
+                <label>Parolă</label>
+
+                <input 
+                    type="password"
+                    placeholder="parola"
+                    required
+                    pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}$"
+                >
+
+                <div class="info">
+                    Minim 8 caractere, o literă mare, un număr și un simbol.
+                </div>
+            </div>
+
+            <!-- DATA -->
+            <div class="camp">
+                <label>Data Rezervării</label>
+
+                <input 
+                    type="date"
+                    required
+                    min="2026-05-01"
+                    max="2026-05-31"
+                >
+            </div>
+
+            <!-- CULOARE -->
+            <div class="camp">
+                <label>Culoare Temă</label>
+
+                <input 
+                    type="color"
+                    id="culoare"
+                    value="#3498db"
+                >
+            </div>
+
+            <button type="submit">
+                Înregistrare
+            </button>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        const culoare = document.getElementById("culoare");
+
+        culoare.addEventListener("input", function(){
+
+            document.documentElement.style.setProperty(
+                "--theme-color",
+                this.value
+            );
+
+        });
+
+    </script>
+
+</body>
+</html>

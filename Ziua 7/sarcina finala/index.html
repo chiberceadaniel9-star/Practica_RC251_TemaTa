@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Control — Architect Dashboard</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Design System + Components -->
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- ====== NAVBAR ====== -->
+  <nav class="nav">
+    <div class="nav__logo">RC-251 // SYSTEM CONTROL</div>
+    <ul class="nav__links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#access">Acces Securizat</a></li>
+    </ul>
+    <button class="nav__toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <span class="nav__toggle-icon">☽</span>
+      <span id="themeLabel">DARK MODE</span>
+    </button>
+  </nav>
+
+  <!-- ====== PAGE WRAPPER ====== -->
+  <main class="page">
+
+    <!-- HERO -->
+    <header class="hero animate-in">
+      <p class="hero__eyebrow">Architect Dashboard · Ziua 7</p>
+      <h1 class="hero__title">Neural <span>System</span> Control</h1>
+      <p class="hero__sub">Monitorizare în timp real · GPU Orchestration · Securitate Cuantică</p>
+    </header>
+
+    <!-- ====== HOLOGRAM CENTERPIECE — Neural Glass ====== -->
+    <section aria-label="Neural Glass Hologram" class="animate-in animate-in--delay-1">
+      <p class="section-title" style="text-align:center;">// centru neuronal · specular tracking</p>
+      <div class="hologram" id="hologram">
+        <div class="hologram__glass" id="hologramGlass"></div>
+        <div class="hologram__ring hologram__ring--1"></div>
+        <div class="hologram__ring hologram__ring--2"></div>
+        <div class="hologram__ring hologram__ring--3"></div>
+        <div class="hologram__orbit"></div>
+        <div class="hologram__core"></div>
+        <div class="hologram__label">
+          <span class="hologram__label-value" id="sysStat">98.7%</span>
+          SYSTEM INTEGRITY
+        </div>
+        <div class="hologram__corner hologram__corner--tl"></div>
+        <div class="hologram__corner hologram__corner--tr"></div>
+        <div class="hologram__corner hologram__corner--bl"></div>
+        <div class="hologram__corner hologram__corner--br"></div>
+      </div>
+    </section>
+
+    <!-- ====== SERVICE GRID — GPU Orchestration ====== -->
+    <section id="services" class="services animate-in animate-in--delay-2">
+      <p class="section-title">// servicii sistem · gpu orchestration</p>
+      <div class="services__grid">
+
+        <article class="service-card" style="--i:0; --pct:94%;">
+          <div class="service-card__header">
+            <div class="service-card__icon">⚡</div>
+            <div class="service-card__status">
+              <span class="service-card__dot service-card__dot--ok"></span>
+              <span>ACTIV</span>
+            </div>
+          </div>
+          <h3 class="service-card__name">Render Engine</h3>
+          <p class="service-card__desc">Motor principal de randare GPU · WebGL 2.0 · 120fps target</p>
+          <div class="service-card__bar">
+            <div class="service-card__bar-fill" style="--i:0; --pct:94%;"></div>
+          </div>
+          <div class="service-card__metric"><span>LOAD</span><span>94%</span></div>
+        </article>
+
+        <article class="service-card" style="--i:1; --pct:78%;">
+          <div class="service-card__header">
+            <div class="service-card__icon">🔐</div>
+            <div class="service-card__status">
+              <span class="service-card__dot service-card__dot--ok"></span>
+              <span>ACTIV</span>
+            </div>
+          </div>
+          <h3 class="service-card__name">Auth Gateway</h3>
+          <p class="service-card__desc">Autentificare cuantică · JWT + MFA · Zero-trust policy</p>
+          <div class="service-card__bar">
+            <div class="service-card__bar-fill" style="--i:1; --pct:78%;"></div>
+          </div>
+          <div class="service-card__metric"><span>UPTIME</span><span>99.97%</span></div>
+        </article>
+
+        <article class="service-card" style="--i:2; --pct:62%;">
+          <div class="service-card__header">
+            <div class="service-card__icon">📡</div>
+            <div class="service-card__status">
+              <span class="service-card__dot service-card__dot--warn"></span>
+              <span>ATENȚIE</span>
+            </div>
+          </div>
+          <h3 class="service-card__name">Data Stream</h3>
+          <p class="service-card__desc">Pipeline WebSocket · latentă 14ms · buffer 62% utilizat</p>
+          <div class="service-card__bar">
+            <div class="service-card__bar-fill" style="--i:2; --pct:62%;"></div>
+          </div>
+          <div class="service-card__metric"><span>BUFFER</span><span>62%</span></div>
+        </article>
+
+        <article class="service-card" style="--i:3; --pct:88%;">
+          <div class="service-card__header">
+            <div class="service-card__icon">🧠</div>
+            <div class="service-card__status">
+              <span class="service-card__dot service-card__dot--ok"></span>
+              <span>ACTIV</span>
+            </div>
+          </div>
+          <h3 class="service-card__name">Neural Core</h3>
+          <p class="service-card__desc">Procesare AI · TensorFlow.js · Inferență on-device</p>
+          <div class="service-card__bar">
+            <div class="service-card__bar-fill" style="--i:3; --pct:88%;"></div>
+          </div>
+          <div class="service-card__metric"><span>ACURATEȚE</span><span>88%</span></div>
+        </article>
+
+        <article class="service-card" style="--i:4; --pct:35%;">
+          <div class="service-card__header">
+            <div class="service-card__icon">🗃️</div>
+            <div class="service-card__status">
+              <span class="service-card__dot service-card__dot--error"></span>
+              <span>EROARE</span>
+            </div>
+          </div>
+          <h3 class="service-card__name">Archive Node</h3>
+          <p class="service-card__desc">Stocare distribuită · Replicare RAID · Sincronizare întreruptă</p>
+          <div class="service-card__bar">
+            <div class="service-card__bar-fill" style="--i:4; --pct:35%;"></div>
+          </div>
+          <div class="service-card__metric"><span>SĂNĂTATE</span><span>35%</span></div>
+        </article>
+
+        <article class="service-card" style="--i:5; --pct:97%;">
+          <div class="service-card__header">
+            <div class="service-card__icon">🌐</div>
+            <div class="service-card__status">
+              <span class="service-card__dot service-card__dot--ok"></span>
+              <span>ACTIV</span>
+            </div>
+          </div>
+          <h3 class="service-card__name">Edge CDN</h3>
+          <p class="service-card__desc">Rețea globală de distribuție · 47 noduri active · sub 5ms</p>
+          <div class="service-card__bar">
+            <div class="service-card__bar-fill" style="--i:5; --pct:97%;"></div>
+          </div>
+          <div class="service-card__metric"><span>DISPONIB.</span><span>97%</span></div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ====== ACCESS FORM — BEM + CSS State Machine ====== -->
+    <section id="access" class="access-form animate-in animate-in--delay-3">
+      <p class="section-title" style="text-align:center;">// acces securizat · bem + css state machine</p>
+      <div class="access-form__card">
+        <h2 class="access-form__title">Autentificare Sistem</h2>
+        <p class="access-form__subtitle">// clearance level · architect</p>
+
+        <div class="access-form__field">
+          <label class="access-form__label" for="username">Identificator Operator</label>
+          <input class="access-form__input" type="text" id="username" name="username"
+            placeholder="username" minlength="3" required autocomplete="username" />
+          <span class="access-form__indicator" aria-hidden="true"></span>
+          <span class="access-form__hint">Minim 3 caractere</span>
+        </div>
+
+        <div class="access-form__field">
+          <label class="access-form__label" for="email">Adresă Cuantică</label>
+          <input class="access-form__input" type="email" id="email" name="email"
+            placeholder="operator@system.rc" required autocomplete="email" />
+          <span class="access-form__indicator" aria-hidden="true"></span>
+          <span class="access-form__hint">Format valid: user@domeniu.ext</span>
+        </div>
+
+        <div class="access-form__field">
+          <label class="access-form__label" for="accesscode">Cod de Acces</label>
+          <input class="access-form__input" type="password" id="accesscode" name="accesscode"
+            placeholder="••••••••" minlength="8" pattern=".{8,}" required autocomplete="current-password" />
+          <span class="access-form__indicator" aria-hidden="true"></span>
+          <span class="access-form__hint">Minim 8 caractere</span>
+        </div>
+
+        <div class="access-form__separator"></div>
+
+        <button class="access-form__submit" type="button">
+          INIȚIALIZARE ACCES ›
+        </button>
+
+        <div class="access-form__statusbar" aria-live="polite">
+          <div class="access-form__statusbar-dot"></div>
+          <span id="formStatus">AȘTEPTÂND CREDENȚIALE VALIDE...</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="footer">
+    RC-251 ARCHITECT DASHBOARD · SISTEM CONTROL v7.0 · &copy; 2025
+  </footer>
+
+  <!-- Behavior — defer pentru a nu bloca randarea -->
+  <script src="/huh.js" defer></script>
+</body>
+</html>

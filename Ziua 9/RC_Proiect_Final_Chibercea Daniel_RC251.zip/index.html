@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portofoliu profesional – dezvoltare web modernă, proiecte frontend și design responsiv." />
+  <meta name="theme-color" content="#0a0a0f" />
+
+  <!-- Favicon pack -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <title>Portofoliu RC251 – Chibercea daniel</title>
+</head>
+<body>
+  <!-- ==================== HEADER / NAV ==================== -->
+  <header class="site-header" role="banner">
+    <div class="container site-header__inner">
+      <a class="site-header__logo" href="#hero" aria-label="Acasă">
+        <span class="site-header__logo-mark" aria-hidden="true">&lt;/&gt;</span>
+        <span class="site-header__logo-text">Chibercea Daniel</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-controls="mainNav" aria-expanded="false" aria-label="Deschide meniu">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+
+      <nav class="nav" id="mainNav" role="navigation" aria-label="Navigare principală">
+        <ul class="nav__list" role="list">
+          <li class="nav__item"><a class="nav__link" href="#despre">Despre</a></li>
+          <li class="nav__item"><a class="nav__link" href="#servicii">Servicii</a></li>
+          <li class="nav__item"><a class="nav__link" href="#proiecte">Proiecte</a></li>
+          <li class="nav__item"><a class="nav__link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" role="main">
+
+    <!-- ==================== HERO ==================== -->
+    <section class="hero" id="hero" aria-labelledby="heroHeading">
+      <div class="container hero__inner">
+        <p class="hero__eyebrow">Bun venit</p>
+        <h1 class="hero__heading" id="heroHeading">
+          Construiesc experiențe<br />
+          <span class="hero__heading--accent">web de excepție</span>
+        </h1>
+        <p class="hero__sub">
+          Dezvoltator frontend pasionat de cod curat, performanță și design
+          responsiv. Fiecare proiect este livrat validat W3C și optimizat pentru
+          toate dispozitivele.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#proiecte">Vezi proiectele</a>
+          <a class="btn btn--ghost" href="#contact">Contactează-mă</a>
+        </div>
+      </div>
+      <div class="hero__grid-bg" aria-hidden="true"></div>
+    </section>
+
+    <!-- ==================== DESPRE ==================== -->
+    <section class="about" id="despre" aria-labelledby="despreHeading">
+      <div class="container about__inner">
+        <div class="about__text">
+          <span class="section-label">Despre mine</span>
+          <h2 class="section-title" id="despreHeading">Pasiune pentru codul<br />care contează</h2>
+          <p>
+            Am parcurs un program intensiv de formare web în care am stăpânit
+            HTML5 semantic, CSS cu metodologia BEM, JavaScript ES6+ și tehnici
+            de optimizare avansată: compresie WebP, lazy loading, Critical CSS
+            și audit Lighthouse.
+          </p>
+          <p>
+            Ziua 9 marchează finalizarea <strong>Release Candidate RC251</strong>:
+            o arhitectură enterprise cu stylesheet de imprimare, pagină 404,
+            favicon pack complet și validare W3C zero erori.
+          </p>
+          <ul class="about__skills" role="list">
+            <li class="about__skill-tag">HTML5 Semantic</li>
+            <li class="about__skill-tag">CSS / BEM</li>
+            <li class="about__skill-tag">JavaScript ES6+</li>
+            <li class="about__skill-tag">Responsive Design</li>
+            <li class="about__skill-tag">Lighthouse Audit</li>
+            <li class="about__skill-tag">W3C Validator</li>
+          </ul>
+        </div>
+        <div class="about__stats" aria-label="Statistici">
+          <div class="stat-card">
+            <span class="stat-card__number" data-count="9">0</span>
+            <span class="stat-card__label">Zile de formare</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__number" data-count="95">0</span>
+            <span class="stat-card__label">Scor Lighthouse</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__number" data-count="0">0</span>
+            <span class="stat-card__label">Erori W3C</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__number" data-count="100">0</span>
+            <span class="stat-card__label">% Responsiv</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SERVICII ==================== -->
+    <section class="services" id="servicii" aria-labelledby="serviciiHeading">
+      <div class="container">
+        <span class="section-label">Ce ofer</span>
+        <h2 class="section-title" id="serviciiHeading">Servicii</h2>
+        <ul class="services__grid" role="list">
+          <li class="service-card">
+            <div class="service-card__icon" aria-hidden="true">🧱</div>
+            <h3 class="service-card__title">Structură Semantică</h3>
+            <p class="service-card__text">
+              HTML5 curat, accesibil și validat W3C. Markup orientat spre
+              motoarele de căutare și cititoarele de ecran.
+            </p>
+          </li>
+          <li class="service-card">
+            <div class="service-card__icon" aria-hidden="true">📱</div>
+            <h3 class="service-card__title">Design Responsiv</h3>
+            <p class="service-card__text">
+              Layout mobile-first testat pe iPhone 14 (390px), iPad Air (820px)
+              și desktop 1920×1080. Zero scroll orizontal.
+            </p>
+          </li>
+          <li class="service-card">
+            <div class="service-card__icon" aria-hidden="true">⚡</div>
+            <h3 class="service-card__title">Performanță</h3>
+            <p class="service-card__text">
+              Imagini WebP comprimate, CSS critic inline, lazy loading și scor
+              Lighthouse peste 90 pentru Mobile și Desktop.
+            </p>
+          </li>
+          <li class="service-card">
+            <div class="service-card__icon" aria-hidden="true">♿</div>
+            <h3 class="service-card__title">Accesibilitate</h3>
+            <p class="service-card__text">
+              ARIA labels, contrast WCAG AA, navigare prin tastatură și
+              structură de titluri logică.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== PROIECTE ==================== -->
+    <section class="projects" id="proiecte" aria-labelledby="proiecteHeading">
+      <div class="container">
+        <span class="section-label">Portofoliu</span>
+        <h2 class="section-title" id="proiecteHeading">Proiecte</h2>
+        <ul class="projects__grid" role="list">
+
+          <li class="project-card">
+            <div class="project-card__img-wrap">
+              <img
+                class="project-card__img"
+                src="assets/img/project-1.webp"
+                alt="Captură de ecran proiect RC251 – pagina de start"
+                width="600"
+                height="380"
+                loading="lazy"
+              />
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">RC251 – Release Candidate</h3>
+              <p class="project-card__desc">
+                Proiect enterprise cu arhitectură completă: print stylesheet,
+                404 custom, favicon pack și audit W3C zero erori.
+              </p>
+              <div class="project-card__tags">
+                <span class="tag">HTML5</span>
+                <span class="tag">CSS BEM</span>
+                <span class="tag">JS</span>
+              </div>
+              <a
+                class="btn btn--sm btn--primary"
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Vezi codul ↗
+              </a>
+            </div>
+          </li>
+
+          <li class="project-card">
+            <div class="project-card__img-wrap">
+              <img
+                class="project-card__img"
+                src="assets/img/project-2.webp"
+                alt="Captură de ecran proiect dashboard responsive"
+                width="600"
+                height="380"
+                loading="lazy"
+              />
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Dashboard Responsiv</h3>
+              <p class="project-card__desc">
+                Interfață de administrare cu grid CSS, dark mode și animații
+                CSS-only. Scor Lighthouse 98/100.
+              </p>
+              <div class="project-card__tags">
+                <span class="tag">CSS Grid</span>
+                <span class="tag">Dark Mode</span>
+                <span class="tag">A11y</span>
+              </div>
+              <a
+                class="btn btn--sm btn--primary"
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Vezi codul ↗
+              </a>
+            </div>
+          </li>
+
+          <li class="project-card">
+            <div class="project-card__img-wrap">
+              <img
+                class="project-card__img"
+                src="assets/img/project-3.webp"
+                alt="Captură de ecran landing page produs"
+                width="600"
+                height="380"
+                loading="lazy"
+              />
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">Landing Page Produs</h3>
+              <p class="project-card__desc">
+                Pagină de conversie cu animații scroll, testimoniale și formular
+                de contact validat JavaScript.
+              </p>
+              <div class="project-card__tags">
+                <span class="tag">Animații</span>
+                <span class="tag">SEO</span>
+                <span class="tag">Forms</span>
+              </div>
+              <a
+                class="btn btn--sm btn--primary"
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Vezi codul ↗
+              </a>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <section class="contact" id="contact" aria-labelledby="contactHeading">
+      <div class="container contact__inner">
+        <div class="contact__text">
+          <span class="section-label">Hai să vorbim</span>
+          <h2 class="section-title" id="contactHeading">Contact</h2>
+          <p>Sunt disponibil pentru proiecte freelance și colaborări. Trimite-mi un mesaj și îți răspund în 24h.</p>
+          <address class="contact__details">
+            <p>
+              <a class="contact__link" href="mailto:email@exemplu.ro">email@exemplu.ro</a>
+            </p>
+            <p>
+              <a class="contact__link" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            </p>
+            <p>
+              <a class="contact__link" href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            </p>
+          </address>
+        </div>
+
+        <form class="contact-form" id="contactForm" novalidate aria-label="Formular de contact">
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="name">Nume complet</label>
+            <input
+              class="contact-form__input"
+              type="text"
+              id="name"
+              name="name"
+              autocomplete="name"
+              required
+              aria-required="true"
+              placeholder="Ion Popescu"
+            />
+            <span class="contact-form__error" id="nameError" role="alert" aria-live="polite"></span>
+          </div>
+
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="email">Email</label>
+            <input
+              class="contact-form__input"
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              required
+              aria-required="true"
+              placeholder="ion@exemplu.ro"
+            />
+            <span class="contact-form__error" id="emailError" role="alert" aria-live="polite"></span>
+          </div>
+
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="message">Mesaj</label>
+            <textarea
+              class="contact-form__input contact-form__input--textarea"
+              id="message"
+              name="message"
+              rows="5"
+              required
+              aria-required="true"
+              placeholder="Scrie-mi despre proiectul tău..."
+            ></textarea>
+            <span class="contact-form__error" id="messageError" role="alert" aria-live="polite"></span>
+          </div>
+
+          <button class="btn btn--primary btn--full" type="submit">Trimite mesajul</button>
+          <p class="contact-form__success" id="formSuccess" aria-live="polite" hidden>
+            ✅ Mesaj trimis cu succes! Te contactez în curând.
+          </p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__inner">
+      <p class="site-footer__copy">
+        &copy; <span id="year"></span> Nume Prenume – Toate drepturile rezervate.
+      </p>
+      <p class="site-footer__credits">
+        Validat
+        <a href="https://validator.w3.org/" target="_blank" rel="noopener noreferrer">W3C</a>
+        · Audit
+        <a href="https://web.dev/measure/" target="_blank" rel="noopener noreferrer">Lighthouse</a>
+      </p>
+    </div>
+    <!-- Final Quality Audit: Mobile Performance Optimized by Nume Prenume -->
+  </footer>
+
+  <script src="/style.css"></script>
+</body>
+</html>

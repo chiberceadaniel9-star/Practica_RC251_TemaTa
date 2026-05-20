@@ -1,0 +1,75 @@
+; =========================================================================
+; RFC 1035 ZONE FILE - CONFIGURARE DNS ENTERPRISE
+; Domeniu Autoritar: chibercea-daniel.rc251.utm.md
+; Configurat de: Chibercea Daniel | Data: 15.05.2026
+; =========================================================================
+
+$ORIGIN chibercea-daniel.rc251.utm.md.
+$TTL 3600 ; TTL Implicit Global: 1 ora
+
+; -------------------------------------------------------------------------
+; 1. INREGISTRAREA START OF AUTHORITY (SOA)
+; -------------------------------------------------------------------------
+@   IN  SOA  ns1.rc251.utm.md. admin.chibercea-daniel.rc251.utm.md. (
+            2026051502 ; Serial: Format YYYYMMDDNN (Data curenta + Versiunea 02 - actualizat dupa modificari)
+            7200       ; Refresh: Interval de interogare pentru serverele Secondary (2 ore)
+            3600       ; Retry: Interval de reincercare in caz de esec (1 ora)
+            1209600    ; Expire: Limita de timp pentru validitatea datelor offline (2 saptamani)
+            1800       ; Minimum TTL: Cache negativ pentru interogari esuate (30 minute)
+)
+
+; -------------------------------------------------------------------------
+; 2. NAMESERVERS (NS) - Delegarea autoritatii
+; -------------------------------------------------------------------------
+@   IN  NS   ns1.rc251.utm.md.
+@   IN  NS   ns2.rc251.utm.md.
+
+; -------------------------------------------------------------------------
+; 3. ADRESE IP PRIMARE (A Records) - Maparea catre serverele Cloud
+; -------------------------------------------------------------------------
+; Maparea radacinii domeniului catre IP-urile serverelor Edge (Netlify)
+@   IN  A    75.2.60.5
+@   IN  A    99.83.190.102
+
+; -------------------------------------------------------------------------
+; 4. SUBDOMENII SI ALIASE (CNAME Records)
+; -------------------------------------------------------------------------
+; MODIFICARE: www indica direct catre domeniul live Netlify (FQDN cu punct final)
+www IN  CNAME chibercea-daniel.netlify.app.
+
+; -------------------------------------------------------------------------
+; 5. CONFIGURARE EMAIL CU PRIORITATI (MX Records)
+; -------------------------------------------------------------------------
+; Serverul primar de mail (Prioritate 10) si cel secundar de backup (Prioritate 20)
+@   IN  MX  10 mail.rc251.utm.md.
+@   IN  MX  20 backup-mail.rc251.utm.md.
+mail IN A   193.226.50.12 ; IP-ul serverului de mail UTM
+
+; -------------------------------------------------------------------------
+; 6. SECURIZARE PORTFOLIO & VERIFICARE DOMENIU (TXT Records)
+; -------------------------------------------------------------------------
+; Verificarea de securitate Google Console
+@   IN  TXT  "google-site-verification=UX251_UTM_ENGINEERING_VERIFIED"
+
+; Politica SPF - VARIANTA ULTRA-PERMISIVA (NESIGURA - doar pentru demonstratie):
+; @   IN  TXT  "v=spf1 mx ip4:1.2.3.4 ~all"
+; ARGUMENTARE: Varianta de mai sus (~all = SoftFail) permite oricarui server necunoscut
+; sa trimita mail-uri in numele domeniului nostru fara a le bloca definitiv.
+; Serverele receptoare le vor accepta totusi, marcandu-le doar ca suspecte.
+; Aceasta politica este vulnerabila la atacuri de tip spoofing si phishing.
+
+; Politica SPF - VARIANTA RESTRICTIVA (RECOMANDATA - activa):
+; "-all" inseamna ca ORICE server care nu este listat explicit in SPF
+; va fi RESPINS definitiv (HardFail) de serverul receptor.
+; Astfel, nimeni nu poate falsifica adrese de email de pe domeniul nostru.
+@   IN  TXT  "v=spf1 mx -all"
+
+; Politica DMARC: Respingerea totala a e-mailurilor falsificate
+_dmarc IN TXT "v=DMARC1; p=reject; pct=100; rua=mailto:dmarc-reports@chibercea-daniel.rc251.utm.md"
+
+; -------------------------------------------------------------------------
+; 7. CONTROL CERTIFICARE SSL (CAA Records)
+; -------------------------------------------------------------------------
+; Autorizam DOAR Let's Encrypt sa poata emite certificate SSL pentru noi
+@   IN  CAA  0 issue "letsencrypt.org"
+@   IN  CAA  0 iodef "mailto:security-alerts@chibercea-daniel.rc251.utm.md"

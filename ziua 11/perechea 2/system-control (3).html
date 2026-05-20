@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Control | Ziua 11</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1117;
+      --bg-card:   #161b22;
+      --border:    #30363d;
+      --green:     #00ff88;
+      --green-dim: #00cc6a;
+      --blue:      #58a6ff;
+      --text:      #c9d1d9;
+      --muted:     #8b949e;
+      --danger:    #ff4757;
+      --warning:   #e3b341;
+      --success:   #2ea043;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .page-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--green); }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    h1 span { color: var(--green); }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-desc {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── Butoane test ── */
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+
+    .btn-danger {
+      background: rgba(255, 71, 87, 0.15);
+      border: 1px solid var(--danger);
+      color: var(--danger);
+    }
+
+    .btn-success {
+      background: rgba(46, 160, 67, 0.15);
+      border: 1px solid var(--success);
+      color: var(--success);
+    }
+
+    .btn-blue {
+      background: rgba(88, 166, 255, 0.15);
+      border: 1px solid var(--blue);
+      color: var(--blue);
+    }
+
+    /* ── Output console ── */
+    .console-output {
+      margin-top: 1rem;
+      background: #010409;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      min-height: 80px;
+    }
+
+    .console-output .line { margin-bottom: 4px; }
+    .console-output .line-ok    { color: var(--success); }
+    .console-output .line-err   { color: var(--danger); }
+    .console-output .line-info  { color: var(--blue); }
+    .console-output .line-warn  { color: var(--warning); }
+    .console-output .line-muted { color: var(--muted); }
+
+    /* ── Codul sursă afișat ── */
+    .code-block {
+      background: #010409;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.78rem;
+      overflow-x: auto;
+      line-height: 1.7;
+    }
+
+    .code-block .kw  { color: #ff7b72; }
+    .code-block .str { color: #a5d6ff; }
+    .code-block .attr{ color: #79c0ff; }
+    .code-block .val { color: #56d364; }
+    .code-block .cm  { color: var(--muted); font-style: italic; }
+
+    /* ── Badge stare ── */
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-ok   { background: rgba(46,160,67,0.15);  color: var(--success); border: 1px solid rgba(46,160,67,0.4); }
+    .badge-warn { background: rgba(227,179,65,0.15); color: var(--warning); border: 1px solid rgba(227,179,65,0.4); }
+
+    /* ── Separator ── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+    /* ── CSP Interaction note ── */
+    .info-box {
+      background: rgba(88, 166, 255, 0.06);
+      border: 1px solid rgba(88, 166, 255, 0.25);
+      border-radius: 10px;
+      padding: 1.2rem;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    .info-box strong { color: var(--blue); }
+
+    code {
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.78rem;
+      background: rgba(255,255,255,0.06);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: var(--blue);
+    }
+
+    ul { padding-left: 1.2rem; }
+    ul li { margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--muted); }
+    ul li strong { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+  ════════════════════════════════════════════ -->
+  <div class="page-header">
+    <a href="index.html" class="back-link">&#8592; inapoi la index.html</a>
+    <h1>System <span>Control</span></h1>
+    <p class="subtitle">
+      Ziua 11 — Testare izolare <code>window.opener</code> &amp; interacțiune CSP / sandbox
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       TEST 1 — window.opener fără protecție
+  ════════════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-title">
+      Test 1: link FARA noopener
+      <span class="badge badge-warn">vulnerabil</span>
+    </div>
+    <p class="card-desc">
+      Deschide un tab nou fără protecție. Pagina deschisă va avea acces la
+      <code>window.opener</code> și poate modifica această pagină din fundal.
+    </p>
+
+    <div class="btn-group">
+      <a href="https://example.com"
+         target="_blank"
+         class="btn btn-danger"
+         id="btn-no-noopener">
+        Deschide fara noopener (periculos)
+      </a>
+      <button class="btn btn-blue" onclick="testOpener()">
+        Verifica window.opener in consola
+      </button>
+    </div>
+
+    <div class="console-output" id="console-1">
+      <div class="line line-muted">&gt; asteptand test...</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       TEST 2 — window.opener CU protecție
+  ════════════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-title">
+      Test 2: link CU noopener noreferrer
+      <span class="badge badge-ok">securizat</span>
+    </div>
+    <p class="card-desc">
+      Același link, dar cu <code>rel="noopener noreferrer"</code>.
+      Pagina deschisă va primi <code>window.opener = null</code>.
+      Orice tentativă de a modifica această pagină va arunca un <code>TypeError</code>.
+    </p>
+
+    <div class="btn-group">
+      <!-- SECURED OUTBOUND LINK -->
+      <a href="https://example.com"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="btn btn-success">
+        Deschide CU noopener noreferrer (sigur)
+      </a>
+      <button class="btn btn-blue" onclick="testOpenerSecure()">
+        Simuleaza TypeError in consola
+      </button>
+    </div>
+
+    <div class="console-output" id="console-2">
+      <div class="line line-muted">&gt; asteptand test...</div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ═══════════════════════════════════════════
+       CODUL HTML SECURIZAT afișat vizual
+  ════════════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-title">Cod HTML securizat — referinta rapida</div>
+    <p class="card-desc">Structura corectă pentru iframe-uri și link-uri externe.</p>
+
+    <div class="code-block">
+      <span class="cm">&lt;!-- Interface Hardening: Sandboxed Iframes &amp; Outbound Isolation --&gt;</span><br>
+      <span class="cm">&lt;!-- by: Nume Prenume | Data: 19.05.2026 --&gt;</span><br><br>
+
+      <span class="cm">&lt;!-- YouTube securizat --&gt;</span><br>
+      <span class="kw">&lt;iframe</span><br>
+      &nbsp;&nbsp;<span class="attr">src</span>=<span class="str">"https://www.youtube-nocookie.com/embed/ID"</span><br>
+      &nbsp;&nbsp;<span class="attr">sandbox</span>=<span class="str">"allow-scripts allow-same-origin allow-presentation"</span><br>
+      &nbsp;&nbsp;<span class="attr">allowfullscreen</span><span class="kw">&gt;&lt;/iframe&gt;</span><br><br>
+
+      <span class="cm">&lt;!-- Google Maps securizat --&gt;</span><br>
+      <span class="kw">&lt;iframe</span><br>
+      &nbsp;&nbsp;<span class="attr">src</span>=<span class="str">"https://www.google.com/maps/embed?..."</span><br>
+      &nbsp;&nbsp;<span class="attr">sandbox</span>=<span class="str">"allow-scripts allow-same-origin"</span><br>
+      &nbsp;&nbsp;<span class="attr">loading</span>=<span class="str">"lazy"</span><span class="kw">&gt;&lt;/iframe&gt;</span><br><br>
+
+      <span class="cm">&lt;!-- Link extern securizat --&gt;</span><br>
+      <span class="kw">&lt;a</span>
+      <span class="attr">href</span>=<span class="str">"https://github.com"</span><br>
+      &nbsp;&nbsp;<span class="attr">target</span>=<span class="str">"_blank"</span><br>
+      &nbsp;&nbsp;<span class="attr">rel</span>=<span class="val">"noopener noreferrer"</span><span class="kw">&gt;</span><br>
+      &nbsp;&nbsp;GitHub<br>
+      <span class="kw">&lt;/a&gt;</span>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ═══════════════════════════════════════════
+       CSP + SANDBOX INTERACTION (task 3 din lecție)
+       <!-- Core-Security Challenge: CSP Interaction
+            Atributul sandbox al unui iframe si directiva frame-src din CSP
+            functioneaza ca DOUA straturi independente de securitate:
+
+            STRATUL 1 - CSP frame-src (pe serverul TĂU):
+            Controleaza de unde POTI incarca iframe-uri.
+            Ex: frame-src https://www.youtube-nocookie.com https://www.google.com
+            Daca URL-ul nu e in lista, browserul refuza sa incarce iframe-ul.
+
+            STRATUL 2 - sandbox (pe iframe-ul din HTML):
+            Controleaza CE POATE FACE iframe-ul odata incarcat.
+            Chiar daca CSP permite sursa, sandbox limiteaza permisiunile.
+
+            Impreuna: CSP decide CINE intra, sandbox decide CE face odata intrat.
+            Un atacator care ocoleste CSP (sursa permisa) inca e blocat de sandbox.
+       -->
+  ════════════════════════════════════════════ -->
+  <div class="card">
+    <div class="card-title">CSP frame-src + sandbox — doua straturi de securitate</div>
+    <div class="info-box">
+      <p style="margin-bottom:0.8rem">
+        <strong>Stratul 1 — CSP <code>frame-src</code></strong> (configurat pe server, Ziua 10)<br>
+        Controlează de <em>unde</em> poți încărca iframe-uri. Dacă URL-ul nu e în listă, browserul refuză complet.
+      </p>
+      <p style="margin-bottom:0.8rem">
+        <strong>Stratul 2 — atribut <code>sandbox</code></strong> (în HTML-ul tău)<br>
+        Controlează <em>ce poate face</em> iframe-ul odată încărcat. Chiar dacă CSP permite sursa, sandbox limitează permisiunile.
+      </p>
+      <p style="margin-bottom:0.8rem"><strong>Cum colaborează:</strong></p>
+      <ul>
+        <li><strong>CSP decide CINE intră</strong> — doar sursele autorizate pot fi încărcate</li>
+        <li><strong>sandbox decide CE FACE</strong> — odată intrat, codul e izolat și restricționat</li>
+        <li>Un atacator care ocolește CSP (sursă permisă dar cod rău) e blocat de sandbox</li>
+        <li>Un sandbox permisiv e compensat de CSP strict — ambele trebuie configurate corect</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <div style="text-align:center; padding: 2rem 0; color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 2rem;">
+    Ziua 11 — Security Hardening | UTM 2026<br>
+    <div style="margin-top:1rem; display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#sandbox"
+         target="_blank"
+         rel="noopener noreferrer"
+         style="color:var(--blue); font-size:0.8rem;">
+        MDN: iframe sandbox
+      </a>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/noopener"
+         target="_blank"
+         rel="noopener noreferrer"
+         style="color:var(--blue); font-size:0.8rem;">
+        MDN: rel=noopener
+      </a>
+      <a href="index.html"
+         style="color:var(--green); font-size:0.8rem;">
+        index.html
+      </a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT — simulare teste console
+  ════════════════════════════════════════════ -->
+  <script>
+    function log(consoleId, message, type) {
+      const el = document.getElementById(consoleId);
+      const line = document.createElement('div');
+      line.className = 'line line-' + type;
+      line.textContent = '> ' + message;
+      if (el.querySelector('.line-muted')) {
+        el.innerHTML = '';
+      }
+      el.appendChild(line);
+    }
+
+    function testOpener() {
+      const c = 'console-1';
+      log(c, 'Verificare window.opener pe aceasta pagina...', 'info');
+
+      setTimeout(() => {
+        if (window.opener !== null) {
+          log(c, 'window.opener detectat! Valoare: [object Window]', 'warn');
+          log(c, 'ATENTIE: pagina care te-a deschis poate fi modificata!', 'err');
+          log(c, 'Ex: window.opener.location = "phishing.com"', 'err');
+        } else {
+          log(c, 'window.opener = null', 'ok');
+          log(c, 'Aceasta pagina a fost deschisa direct (nu prin link extern).', 'info');
+        }
+        log(c, 'Test complet. Deschide link-ul de mai sus, apoi F12 > Console', 'muted');
+        log(c, 'si scrie: window.opener  pentru a vedea rezultatul real.', 'muted');
+      }, 300);
+    }
+
+    function testOpenerSecure() {
+      const c = 'console-2';
+      log(c, 'Simulare: tab nou deschis cu rel="noopener noreferrer"', 'info');
+
+      setTimeout(() => {
+        log(c, 'In noul tab: window.opener === null', 'ok');
+        log(c, 'Tentativa de atac: window.opener.location = "phishing.com"', 'warn');
+      }, 400);
+
+      setTimeout(() => {
+        log(c, 'TypeError: Cannot set properties of null (setting \'location\')', 'err');
+        log(c, 'SUCCES: Atacul a esuat. window.opener este null.', 'ok');
+        log(c, 'Izolarea contextului de executie functioneaza corect.', 'ok');
+      }, 900);
+    }
+  </script>
+
+</body>
+</html>

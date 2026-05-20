@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio Expert — Asset Optimization cu WebP și Lazy Loading" />
+  <title>Portfolio Expert | The Ultralight Web</title>
+
+  <!-- Preload resursei critice (Hero) pentru LCP optim -->
+  <link rel="preload" as="image" href="img/project-1.webp" type="image/webp" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER / NAV
+  ============================================================ -->
+  <header class="site-header">
+    <nav class="nav-container" aria-label="Navigare principală">
+      <a href="#" class="nav-logo">◈ Portfolio</a>
+      <ul class="nav-links" role="list">
+        <li><a href="#about">Despre</a></li>
+        <li><a href="#projects">Proiecte</a></li>
+        <li><a href="#gallery">Galerie</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Meniu mobil" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ============================================================
+       HERO — Imagine DEASUPRA foldului (NU lazy loading)
+       Aspect Ratio Security: width + height definite în HTML
+  ============================================================ -->
+  <section class="hero" id="home" aria-label="Secțiune Hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Performance · Speed · Quality</span>
+      <h1 class="hero-title">The Ultralight<br /><em>Web</em></h1>
+      <p class="hero-subtitle">Asset Optimization prin WebP, Lazy Loading și Priority Loading</p>
+      <a href="#projects" class="btn-primary">Explorează Proiectele</a>
+    </div>
+
+    <!-- Imagine Hero — NU se folosește lazy, este above-the-fold -->
+    <div class="hero-image-wrap">
+      <img
+        src="img/gallery-1.webp"
+        alt="Hero banner — design vizual modern pentru portfolio expert"
+        width="1200"
+        height="600"
+        fetchpriority="high"
+      />
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT — Picture Element cu Art Direction + fallback JPG
+       Cerință RC 251 #2
+  ============================================================ -->
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="about-container">
+      <div class="about-text">
+        <span class="section-tag">// Despre mine</span>
+        <h2 id="about-title">Expert în<br />Web Performance</h2>
+        <p>Specializat în optimizarea activelor digitale, reducând greutatea totală a paginii cu peste <strong>60%</strong> fără pierdere de calitate vizuală.</p>
+        <ul class="about-stats" role="list">
+          <li><strong>90+</strong> <span>PageSpeed Score</span></li>
+          <li><strong>60%</strong> <span>Reducere greutate</span></li>
+          <li><strong>WebP</strong> <span>Format principal</span></li>
+        </ul>
+      </div>
+
+      <!-- Picture Element — Art Direction cu WebP + JPG fallback -->
+      <figure class="about-figure">
+        <picture>
+          <source srcset="assets/img/about.webp" type="image/webp" />
+          <img
+            src="assets/img/about.jpg"
+            alt="Echipa noastră — specialiști în web performance și asset optimization"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="600"
+          />
+        </picture>
+        <figcaption>Echipa de experți — Web Performance Lab</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROJECTS — Imagini SUB fold cu lazy loading
+       Asset Optimization: WebP + Lazy Loading implemented by Nume Prenume
+  ============================================================ -->
+  <section class="projects" id="projects" aria-labelledby="projects-title">
+    <div class="section-header">
+      <span class="section-tag">// Proiecte</span>
+      <h2 id="projects-title">Studii de Caz</h2>
+    </div>
+
+    <!-- Asset Optimization: WebP + Lazy Loading implemented by Nume Prenume -->
+    <div class="projects-grid">
+
+      <article class="project-card" data-index="1">
+        <div class="project-img-wrap">
+          <img
+            src="img/project-1.webp"
+            alt="Proiect 1 — Optimizare e-commerce cu scor PageSpeed 97"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="400"
+          />
+        </div>
+        <div class="project-info">
+          <span class="project-tag">E-Commerce</span>
+          <h3>ShopSpeed Optimization</h3>
+          <p>Reducere timp de încărcare de la 8.2s la 1.4s prin audit complet de active.</p>
+          <a href="#" class="project-link" aria-label="Detalii proiect ShopSpeed">Vezi proiectul →</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-index="2">
+        <div class="project-img-wrap">
+          <img
+            src="img/project-2.webp"
+            alt="Proiect 2 — Redesign portal educațional cu focus pe performanță"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="400"
+          />
+        </div>
+        <div class="project-info">
+          <span class="project-tag">Educație</span>
+          <h3>EduPortal Redesign</h3>
+          <p>Arhitectură de imagini responsive — 4 breakpoint-uri, 60% mai puțin date.</p>
+          <a href="#" class="project-link" aria-label="Detalii proiect EduPortal">Vezi proiectul →</a>
+        </div>
+      </article>
+
+      <article class="project-card" data-index="3">
+        <div class="project-img-wrap">
+          <img
+            src="img/project-3.webp"
+            alt="Proiect 3 — Landing page de marketing cu Core Web Vitals perfect"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="400"
+          />
+        </div>
+        <div class="project-info">
+          <span class="project-tag">Marketing</span>
+          <h3>Core Web Vitals Fix</h3>
+          <p>Eliminarea Cumulative Layout Shift prin width/height explicit pe toate imaginile.</p>
+          <a href="#" class="project-link" aria-label="Detalii proiect Core Web Vitals">Vezi proiectul →</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       GALLERY — Imagini multiple cu lazy loading + WebP
+       Screenshot 3: cel puțin 3 tag-uri <img> consecutive cu loading="lazy" și .webp
+       Asset Optimization: WebP + Lazy Loading implemented by Nume Prenume
+  ============================================================ -->
+  <section class="gallery" id="gallery" aria-labelledby="gallery-title">
+    <div class="section-header">
+      <span class="section-tag">// Galerie</span>
+      <h2 id="gallery-title">Visual Library</h2>
+    </div>
+
+    <!-- Asset Optimization: WebP + Lazy Loading implemented by Nume Prenume -->
+    <div class="gallery-grid">
+
+      <figure class="gallery-item gallery-item--wide">
+        <img
+          src="img/gallery-1.webp"
+          alt="Detaliu proiect 1 — interfață dashboard analytics"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="500"
+        />
+      </figure>
+
+      <figure class="gallery-item">
+        <img
+          src="img/gallery-2.webp"
+          alt="Detaliu proiect 2 — mobile-first design sistem"
+          loading="lazy"
+          decoding="async"
+          width="400"
+          height="400"
+        />
+      </figure>
+
+      <figure class="gallery-item">
+        <img
+          src="img/gallery-3.webp"
+          alt="Detaliu proiect 3 — componente UI moderne"
+          loading="lazy"
+          decoding="async"
+          width="400"
+          height="400"
+        />
+      </figure>
+
+      <figure class="gallery-item">
+        <img
+          src="img/gallery-4.webp"
+          alt="Detaliu proiect 4 — sistem de tipografie editorial"
+          loading="lazy"
+          decoding="async"
+          width="400"
+          height="300"
+        />
+      </figure>
+
+      <figure class="gallery-item gallery-item--tall">
+        <img
+          src="img/gallery-5 (1).webp"
+          alt="Detaliu proiect 5 — paleta de culori și branding"
+          loading="lazy"
+          decoding="async"
+          width="400"
+          height="600"
+        />
+      </figure>
+
+      <figure class="gallery-item gallery-item--wide">
+        <img
+          src="img/gallery-6.webp"
+          alt="Detaliu proiect 6 — performance audit results"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="400"
+        />
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PERFORMANCE METRICS — Visual score card
+  ============================================================ -->
+  <section class="metrics" id="metrics" aria-labelledby="metrics-title">
+    <div class="metrics-inner">
+      <div class="section-header section-header--light">
+        <span class="section-tag">// Rezultate</span>
+        <h2 id="metrics-title">Performance<br />Dashboard</h2>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-card" data-score="97">
+          <div class="metric-ring" aria-hidden="true">
+            <svg viewBox="0 0 100 100" width="120" height="120">
+              <circle class="ring-bg" cx="50" cy="50" r="42" />
+              <circle class="ring-fill ring-fill--green" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="7.9" />
+            </svg>
+            <span class="metric-value">97</span>
+          </div>
+          <p>Performance</p>
+        </div>
+        <div class="metric-card" data-score="100">
+          <div class="metric-ring" aria-hidden="true">
+            <svg viewBox="0 0 100 100" width="120" height="120">
+              <circle class="ring-bg" cx="50" cy="50" r="42" />
+              <circle class="ring-fill ring-fill--green" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="0" />
+            </svg>
+            <span class="metric-value">100</span>
+          </div>
+          <p>Accessibility</p>
+        </div>
+        <div class="metric-card" data-score="95">
+          <div class="metric-ring" aria-hidden="true">
+            <svg viewBox="0 0 100 100" width="120" height="120">
+              <circle class="ring-bg" cx="50" cy="50" r="42" />
+              <circle class="ring-fill ring-fill--green" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="13.2" />
+            </svg>
+            <span class="metric-value">95</span>
+          </div>
+          <p>Best Practices</p>
+        </div>
+        <div class="metric-card" data-score="100">
+          <div class="metric-ring" aria-hidden="true">
+            <svg viewBox="0 0 100 100" width="120" height="120">
+              <circle class="ring-bg" cx="50" cy="50" r="42" />
+              <circle class="ring-fill ring-fill--green" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="0" />
+            </svg>
+            <span class="metric-value">100</span>
+          </div>
+          <p>SEO</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="contact-inner">
+      <span class="section-tag">// Contact</span>
+      <h2 id="contact-title">Hai să colaborăm</h2>
+      <p>Disponibil pentru proiecte de optimizare web și consultanță în performance.</p>
+      <a href="mailto:contact@expert.ro" class="btn-primary">Trimite un mesaj</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p>© 2025 Portfolio Expert · Asset Optimization · <span id="year"></span></p>
+      <p class="footer-note">Toate imaginile sunt în format <strong>.webp</strong> · Lazy Loading activ sub fold</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

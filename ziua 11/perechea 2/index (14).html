@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portofoliu Securizat | Ziua 11</title>
+  <style>
+    /* ── Reset & variabile ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1117;
+      --bg-card:   #161b22;
+      --border:    #30363d;
+      --green:     #00ff88;
+      --green-dim: #00cc6a;
+      --blue:      #58a6ff;
+      --text:      #c9d1d9;
+      --muted:     #8b949e;
+      --danger:    #ff4757;
+      --success:   #2ea043;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Navbar ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav .logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 1px;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    /* SECURED OUTBOUND LINKS - rel="noopener noreferrer" pe toate */
+    nav .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav .nav-links a:hover { color: var(--green); }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 span { color: var(--green); }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .badge-security {
+      display: inline-block;
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid var(--green-dim);
+      color: var(--green);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Secțiuni ── */
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.3rem;
+      background: var(--green);
+      border-radius: 2px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Card media container ── */
+    .media-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 650px) {
+      .media-container { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2rem; }
+    }
+
+    .media-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .media-card-header {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .media-card-header span {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .tag-sandbox {
+      font-size: 0.7rem;
+      background: rgba(46, 160, 67, 0.15);
+      color: var(--success);
+      border: 1px solid rgba(46, 160, 67, 0.4);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .tag-nocookie {
+      font-size: 0.7rem;
+      background: rgba(88, 166, 255, 0.15);
+      color: var(--blue);
+      border: 1px solid rgba(88, 166, 255, 0.4);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    /* ── Iframe-urile propriu-zise ── */
+
+    /* Interface Hardening: Sandboxed Iframes & Outbound Isolation by: Nume Prenume | Data: 19.05.2026 */
+    .media-card iframe {
+      display: block;
+      width: 100%;
+      border: none;
+    }
+
+    /* ── Tabel securitate ── */
+    .security-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .security-table th {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .security-table td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid rgba(48,54,61,0.5);
+      vertical-align: top;
+    }
+
+    .security-table tr:last-child td { border-bottom: none; }
+
+    .check { color: #2ea043; font-size: 1rem; }
+    .cross { color: var(--danger); font-size: 1rem; }
+
+    .code-inline {
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 0.78rem;
+      background: rgba(255,255,255,0.06);
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: var(--blue);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    footer p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* SECURED OUTBOUND LINKS - toate cu rel="noopener noreferrer" */
+    .social-links__item {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .social-links__item:hover {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .footer-security-note {
+      margin-top: 1.2rem;
+      font-size: 0.75rem;
+      color: rgba(139, 148, 158, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAVBAR cu link-uri interne (fără target blank)
+  ════════════════════════════════════════════ -->
+  <nav>
+    <span class="logo">&lt;SECURIZAT /&gt;</span>
+    <ul class="nav-links">
+      <li><a href="#media">Media</a></li>
+      <li><a href="#securitate">Securitate</a></li>
+      <li><a href="system-control.html">System Control</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════ -->
+  <section class="hero">
+    <h1>Portofoliu <span>Securizat</span></h1>
+    <p>Ziua 11 — Interface Hardening: Sandbox Iframes & Outbound Link Isolation</p>
+    <span class="badge-security">&#x25CF; Securitate Activă</span>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECȚIUNEA MEDIA — iframe-uri securizate
+  ════════════════════════════════════════════ -->
+  <section class="section" id="media">
+    <div class="section-title">Embed-uri multimedia securizate</div>
+    <p class="section-sub">
+      Ambele iframe-uri folosesc atributul <span class="code-inline">sandbox</span> cu permisiuni minime.
+      YouTube folosește domeniul <span class="code-inline">youtube-nocookie.com</span> (conformitate GDPR).
+    </p>
+
+    <!-- SECURED MULTIMEDIA CONTAINER -->
+    <div class="media-container">
+
+      <!-- Card YouTube -->
+      <div class="media-card">
+        <div class="media-card-header">
+          <span>YouTube Player</span>
+          <div style="display:flex; gap:6px;">
+            <span class="tag-nocookie">nocookie</span>
+            <span class="tag-sandbox">sandbox</span>
+          </div>
+        </div>
+
+        <!-- Interface Hardening: Sandboxed Iframes & Outbound Isolation by: Nume Prenume | Data: 19.05.2026 -->
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
+          title="Prezentare Tehnica Proiect"
+          height="220"
+          sandbox="allow-scripts allow-same-origin allow-presentation"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <!-- Card Google Maps -->
+      <div class="media-card">
+        <div class="media-card-header">
+          <span>Google Maps — UTM Chisinau</span>
+          <span class="tag-sandbox">sandbox</span>
+        </div>
+
+        <!-- Interface Hardening: Sandboxed Iframes & Outbound Isolation by: Nume Prenume | Data: 19.05.2026 -->
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2712.15392233634!2d28.86178827694383!3d47.05697272512144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97d374e2df40b%3A0x633190df0357e6c4!2sUniversitatea%20Tehnic%C4%83%20a%20Moldovei!5e0!3m2!1sro!2smd!4v1716104400000!5m2!1sro!2smd"
+          title="Locatie UTM Chisinau"
+          height="220"
+          loading="lazy"
+          sandbox="allow-scripts allow-same-origin"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+    </div><!-- /media-container -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECȚIUNEA SECURITATE — tabel rezumat
+  ════════════════════════════════════════════ -->
+  <section class="section" id="securitate">
+    <div class="section-title">Raport de securitate</div>
+    <p class="section-sub">
+      Verificare completă a măsurilor implementate în această pagină.
+    </p>
+
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+      <table class="security-table">
+        <thead>
+          <tr>
+            <th>Masura de securitate</th>
+            <th>Status</th>
+            <th>Detaliu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>iframe YouTube — atribut sandbox</td>
+            <td><span class="check">✔</span></td>
+            <td><span class="code-inline">allow-scripts allow-same-origin allow-presentation</span></td>
+          </tr>
+          <tr>
+            <td>iframe Maps — atribut sandbox</td>
+            <td><span class="check">✔</span></td>
+            <td><span class="code-inline">allow-scripts allow-same-origin</span></td>
+          </tr>
+          <tr>
+            <td>allow-top-navigation eliminat</td>
+            <td><span class="check">✔</span></td>
+            <td>Frame busting blocat complet</td>
+          </tr>
+          <tr>
+            <td>allow-popups eliminat</td>
+            <td><span class="check">✔</span></td>
+            <td>Ferestrele pop-up din iframe sunt blocate</td>
+          </tr>
+          <tr>
+            <td>YouTube domeniu nocookie</td>
+            <td><span class="check">✔</span></td>
+            <td><span class="code-inline">youtube-nocookie.com</span> — conformitate GDPR</td>
+          </tr>
+          <tr>
+            <td>Link-uri externe cu noopener</td>
+            <td><span class="check">✔</span></td>
+            <td><span class="code-inline">rel="noopener noreferrer"</span> pe toate</td>
+          </tr>
+          <tr>
+            <td>Reverse Tabnabbing blocat</td>
+            <td><span class="check">✔</span></td>
+            <td><span class="code-inline">window.opener</span> setat la null</td>
+          </tr>
+          <tr>
+            <td>HTTP Referer ascuns</td>
+            <td><span class="check">✔</span></td>
+            <td><span class="code-inline">noreferrer</span> previne scurgerea URL-ului intern</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER — SECURED OUTBOUND LINKS
+       Toate link-urile externe au rel="noopener noreferrer"
+  ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <p>Proiect realizat în cadrul UTM de către <strong>Nume Prenume</strong> | Ziua 11 — Security Hardening</p>
+
+    <!-- SECURED OUTBOUND LINKS -->
+    <div class="social-links">
+      <a href="https://github.com"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="social-links__item">
+        GitHub Oficial
+      </a>
+      <a href="https://utm.md"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="social-links__item">
+        Portal UTM
+      </a>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="social-links__item">
+        Docs iframe MDN
+      </a>
+    </div>
+
+    <p class="footer-security-note">
+      Interface Hardening implementat: Sandboxed Iframes &amp; Outbound Link Isolation | 19.05.2026
+    </p>
+  </footer>
+
+</body>
+</html>

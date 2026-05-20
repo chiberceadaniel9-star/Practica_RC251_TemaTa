@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ziua 8 | Fundamentele Securității Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="scanline"></div>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header" data-animate>
+    <svg class="shield" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M28 4L8 12V26C8 37.05 16.8 47.36 28 50C39.2 47.36 48 37.05 48 26V12L28 4Z"
+        fill="rgba(232,48,58,0.15)" stroke="#e8303a" stroke-width="1.5"/>
+      <path d="M22 28l4 4 8-8" stroke="#e8303a" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="header-text">
+      <div class="day-badge">Ziua 8 · Perechea I</div>
+      <h1>Fundamentele<br>Securității Web</h1>
+      <div class="meta">
+        <div>Nivel: <span>Intermediar-Avansat</span></div>
+        <div>Focus: <span>Securizarea Activelor Digitale &amp; Analiza Amenințărilor</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section" data-animate>
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <h2>Partea Teoretică: Anatomia unui Atac Cibernetic</h2>
+    </div>
+
+    <div class="card">
+      <p class="intro-text">Înainte de forum, trebuie să înțelegem ce protejăm.</p>
+      <a href="https://www.w3schools.com/cybersecurity/" target="_blank" class="study-link">
+        W3Schools – Web Security
+      </a>
+    </div>
+
+    <div class="concepts-grid">
+      <div class="concept-card" data-threat="xss">
+        <div class="concept-tag tag-red">XSS</div>
+        <div class="concept-title">Cross-Site Scripting</div>
+        <div class="concept-desc">Cum pot injecta atacatorii scripturi în paginile voastre.</div>
+        <div class="threat-meter"><div class="threat-bar" data-level="90"></div></div>
+      </div>
+      <div class="concept-card" data-threat="sql">
+        <div class="concept-tag tag-orange">SQL Injection</div>
+        <div class="concept-title">Injecție SQL</div>
+        <div class="concept-desc">Pericolul formularelor nevalidate și accesul neautorizat la baze de date.</div>
+        <div class="threat-meter"><div class="threat-bar" data-level="95"></div></div>
+      </div>
+      <div class="concept-card" data-threat="ssl">
+        <div class="concept-tag tag-green">HTTPS &amp; SSL</div>
+        <div class="concept-title">Criptare Transport</div>
+        <div class="concept-desc">De ce este vital protocolul de criptare pentru site-urile construite până acum.</div>
+        <div class="threat-meter threat-meter--good"><div class="threat-bar" data-level="100"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section" data-animate>
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <h2>Sarcina Practică: Auditul de Securitate al Proiectului Propriu</h2>
+    </div>
+
+    <div class="card card--info">
+      <p class="card-body-text">
+        Copiați codul formularului de contact creat în Ziua 6/7 în editorul W3Schools și aplicați
+        următoarele măsuri de <strong>"Hardening"</strong>:
+      </p>
+    </div>
+
+    <!-- A -->
+    <div class="subsection">
+      <h3>A. Validarea Input-ului (HTML5 Security)</h3>
+      <ul class="task-list">
+        <li>
+          <span class="li-icon">⚙️</span>
+          <div>
+            <span class="li-label">SARCINA</span>
+            Adăugați atributele <code>required</code>, <code>pattern</code> (pentru format email/telefon)
+            și <code class="green">maxlength</code> la toate câmpurile.
+          </div>
+        </li>
+        <li>
+          <span class="li-icon">✅</span>
+          <div>
+            <span class="li-label">VALIDARE W3S</span>
+            Faceți un screenshot în care încercați să trimiteți date invalide și browserul blochează acțiunea.
+          </div>
+        </li>
+        <li class="li-screenshot">
+          <span class="li-icon">📸</span>
+          <div>
+            <div class="screenshot-badge">📷 SS22_Input_Validation_Nume.png</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- B -->
+    <div class="subsection">
+      <h3>B. Content Security Policy (CSP) Intro</h3>
+      <ul class="task-list">
+        <li>
+          <span class="li-icon">⚙️</span>
+          <div>
+            <span class="li-label">SARCINA</span>
+            Adăugați în <code>&lt;head&gt;</code>-ul fișierului <code class="green">system-control.html</code>
+            un meta tag care să restricționeze încărcarea scripturilor din surse necunoscute.
+          </div>
+        </li>
+      </ul>
+
+      <div class="code-block" id="cspCode">
+        <button class="copy-btn" data-target="cspCode" title="Copiază codul">⎘ Copy</button>
+        <span class="tag">&lt;meta</span> <span class="attr">http-equiv</span>=<span class="str">"Content-Security-Policy"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="attr">content</span>=<span class="str">"default-src 'self'; script-src 'self'<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://trusted.com"</span><span class="tag">&gt;</span>
+      </div>
+
+      <ul class="task-list">
+        <li class="li-screenshot">
+          <span class="li-icon">📸</span>
+          <div>
+            <div class="screenshot-badge">📷 SS23_CSP_Header_Nume.png</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div class="section" data-animate>
+    <div class="section-header">
+      <div class="section-num">🏁</div>
+      <h2>Checklist Perechea I</h2>
+    </div>
+    <div class="checklist" id="checklist">
+      <div class="checklist-header">
+        <div class="checklist-title">Bifați ce ați completat</div>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progressBar"></div>
+          <span class="progress-label" id="progressLabel">0 / 3</span>
+        </div>
+      </div>
+      <div class="check-item" data-check>
+        <div class="checkbox"></div>
+        <span>Am înțeles diferența dintre criptarea datelor în repaus și în tranzit.</span>
+      </div>
+      <div class="check-item" data-check>
+        <div class="checkbox"></div>
+        <span>Formularul meu nu permite trimiterea de câmpuri goale.</span>
+      </div>
+      <div class="check-item" data-check>
+        <div class="checkbox"></div>
+        <span>Am pregătit întrebări pentru experții de la Forumul de Cybersecurity.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="/huh.js"></script>
+</body>
+</html>

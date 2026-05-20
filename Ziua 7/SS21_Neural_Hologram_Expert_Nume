@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<!-- Realizat de: Nume Prenume | Nivel Expert RC 251 -->
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neural Hologram | RC 251</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+  :root {
+    --p: 2000px;
+    --rx: 0deg;
+    --ry: 0deg;
+    --glitch-offset: 2px;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+    --shadow-x: 0px;
+    --shadow-y: 0px;
+    --spec-x: 50%;
+    --spec-y: 50%;
+    --cyan: #00f2ff;
+    --red:  #ff003c;
+    --dark: #020202;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    font-family: 'Share Tech Mono', monospace;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  .neural-engine {
+    perspective: var(--p);
+    background:
+      linear-gradient(rgba(0,242,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,242,255,0.03) 1px, transparent 1px),
+      #020202;
+    background-size: 40px 40px;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Ambient vignette */
+  .neural-engine::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 40%, #020202 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── SPATIAL ANCHOR ── */
+  .spatial-anchor {
+    width: 400px;
+    height: 550px;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx)) rotateY(var(--ry));
+    will-change: transform;
+    transition: transform 0.08s ease-out;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── BASE LAYER STYLES ── */
+  .layer {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+  }
+
+  /* ── STRAT 0: NUCLEUL DE ENERGIE ── */
+  .core-glow {
+    background: radial-gradient(ellipse at 50% 60%,
+      rgba(0,242,255,0.18) 0%,
+      rgba(0,242,255,0.04) 50%,
+      transparent 80%);
+    transform: translateZ(0px);
+    mix-blend-mode: screen;
+    filter: blur(8px);
+    animation: corePulse 4s ease-in-out infinite;
+  }
+
+  @keyframes corePulse {
+    0%, 100% { opacity: 0.7; }
+    50%       { opacity: 1; }
+  }
+
+  /* ── STRAT 1: CARCASA DE STICLĂ ── */
+  .glass-chassis {
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(30px) saturate(200%) contrast(110%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%) contrast(110%);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-top-color: rgba(255,255,255,0.35);
+    border-left-color: rgba(255,255,255,0.25);
+    box-shadow:
+      inset 0 0 100px rgba(0,242,255,0.05),
+      0 0 60px rgba(0,242,255,0.08),
+      /* Ray-traced shadow — linked to rotation vars */
+      calc(var(--shadow-x) * 1px) calc(var(--shadow-y) * 1px) 80px rgba(0,0,0,0.8);
+    transform: translateZ(20px);
+    isolation: isolate;
+  }
+
+  /* ── STRAT 2: DATA INTERFACE ── */
+  .data-interface {
+    transform: translateZ(80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 30px;
+  }
+
+  .header {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: rgba(0,242,255,0.6);
+    text-transform: uppercase;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid rgba(0,242,255,0.15);
+    padding-bottom: 12px;
+  }
+
+  .stats {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(0,242,255,0.4);
+    width: 100%;
+    text-align: right;
+  }
+
+  /* ── GLITCH TEXT ── */
+  .glitch-text {
+    font-family: 'Orbitron', monospace;
+    font-size: 2.6rem;
+    font-weight: 900;
+    color: white;
+    text-align: center;
+    letter-spacing: 0.05em;
+    position: relative;
+    text-shadow:
+      calc(var(--glitch-offset) * -1) 0 var(--red),
+      var(--glitch-offset) 0 var(--cyan);
+    transform: translateZ(120px);
+    line-height: 1.1;
+  }
+
+  /* Glitch keyframe animation every 3s */
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    overflow: hidden;
+    clip-path: inset(0 0 100% 0);
+    animation: glitchReveal 3s steps(1) infinite;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .glitch-text::before {
+    color: var(--red);
+    transform: translateX(-3px);
+    animation-delay: 0s;
+    mix-blend-mode: screen;
+  }
+
+  .glitch-text::after {
+    color: var(--cyan);
+    transform: translateX(3px);
+    animation-delay: 0.05s;
+    mix-blend-mode: screen;
+  }
+
+  @keyframes glitchReveal {
+    0%   { clip-path: inset(0 0 100% 0); opacity: 0; }
+    3%   { clip-path: inset(20% 0 50% 0); opacity: 1; }
+    6%   { clip-path: inset(60% 0 10% 0); opacity: 1; }
+    9%   { clip-path: inset(0 0 100% 0); opacity: 0; }
+    100% { clip-path: inset(0 0 100% 0); opacity: 0; }
+  }
+
+  /* ── STRAT 3: ORBITAL NODE ── */
+  .orbital-node {
+    transform: translateZ(220px);
+    pointer-events: none;
+  }
+
+  .satellite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    margin: -25px 0 0 -25px;
+    background: radial-gradient(circle at 35% 35%, #a0faff, var(--cyan));
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px var(--cyan),
+      0 0 60px rgba(0,242,255,0.6);
+    mix-blend-mode: screen;
+    animation: orbitXAxis 5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes orbitXAxis {
+    0%   { transform: translateX(-160px) translateZ(-80px) scale(0.7); opacity: 0.6; }
+    25%  { transform: translateX(-80px)  translateZ(0px)   scale(0.9); }
+    50%  { transform: translateX(0px)    translateZ(100px) scale(1.25); opacity: 1; }
+    75%  { transform: translateX(80px)   translateZ(0px)   scale(0.9); }
+    100% { transform: translateX(160px)  translateZ(-80px) scale(0.7); opacity: 0.6; }
+  }
+
+  /* Satellite orbit trail */
+  .satellite::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,242,255,0.3);
+    animation: trailPulse 5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes trailPulse {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50%       { transform: scale(1.4); opacity: 0; }
+  }
+
+  /* ── STRAT 4: SPECULAR HIGHLIGHT ── */
+  .specular-highlight {
+    transform: translateZ(180px);
+    border-radius: 16px;
+    background: radial-gradient(
+      circle 180px at var(--spec-x) var(--spec-y),
+      rgba(255,255,255,0.12) 0%,
+      rgba(0,242,255,0.04) 40%,
+      transparent 70%
+    );
+    mix-blend-mode: color-dodge;
+    pointer-events: none;
+    transition: background 0.05s linear;
+  }
+
+  /* ── STRAT 5: EDGE HIGHLIGHT (extra Z layer) ── */
+  .edge-highlight {
+    transform: translateZ(50px);
+    border-radius: 16px;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%) border-box;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) padding-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* ── SCAN LINE ── */
+  .scan-line {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    transform: translateZ(160px);
+    pointer-events: none;
+  }
+
+  .scan-line::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0,242,255,0.5), transparent);
+    animation: scanDown 4s linear infinite;
+  }
+
+  @keyframes scanDown {
+    0%   { top: -2px; opacity: 0; }
+    5%   { opacity: 1; }
+    95%  { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  /* ── HUD ELEMENTS ── */
+  .hud-corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    transform: translateZ(90px);
+  }
+  .hud-corner--tl { top: 16px; left: 16px; border-top: 1px solid var(--cyan); border-left: 1px solid var(--cyan); }
+  .hud-corner--tr { top: 16px; right: 16px; border-top: 1px solid var(--cyan); border-right: 1px solid var(--cyan); }
+  .hud-corner--bl { bottom: 16px; left: 16px; border-bottom: 1px solid var(--cyan); border-left: 1px solid var(--cyan); }
+  .hud-corner--br { bottom: 16px; right: 16px; border-bottom: 1px solid var(--cyan); border-right: 1px solid var(--cyan); }
+
+  .progress-bar {
+    position: absolute;
+    bottom: 50px;
+    left: 30px; right: 30px;
+    transform: translateZ(90px);
+  }
+
+  .progress-bar__label {
+    font-size: 0.6rem;
+    color: rgba(0,242,255,0.5);
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+  }
+
+  .progress-bar__track {
+    height: 2px;
+    background: rgba(0,242,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), #fff);
+    box-shadow: 0 0 8px var(--cyan);
+    animation: progressAnim 6s ease-in-out infinite;
+    border-radius: 2px;
+  }
+
+  @keyframes progressAnim {
+    0%   { width: 72%; }
+    40%  { width: 95%; }
+    60%  { width: 95%; }
+    100% { width: 72%; }
+  }
+
+  /* ── TOOLTIP / INSTRUCTIONS ── */
+  .instructions {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    color: rgba(0,242,255,0.3);
+    letter-spacing: 0.2em;
+    text-align: center;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<main class="neural-engine" id="engine">
+
+  <div class="spatial-anchor" id="anchor">
+
+    <!-- Strat 0: Nucleul de energie -->
+    <div class="layer core-glow"></div>
+
+    <!-- Strat 1: Carcasa de sticlă (Refracție) -->
+    <div class="layer glass-chassis"></div>
+
+    <!-- HUD Corners -->
+    <div class="hud-corner hud-corner--tl"></div>
+    <div class="hud-corner hud-corner--tr"></div>
+    <div class="hud-corner hud-corner--bl"></div>
+    <div class="hud-corner hud-corner--br"></div>
+
+    <!-- Strat 2: Interfața Semantică (Z: 100px) -->
+    <div class="layer data-interface">
+      <div class="header">SYSTEM_STATUS: ACTIVE</div>
+      <h1 class="glitch-text" data-text="NEURAL_LINK">NEURAL_LINK</h1>
+      <div class="stats">LATENCY: 0.002ms</div>
+      <div class="progress-bar">
+        <div class="progress-bar__label">SYNC_RATE</div>
+        <div class="progress-bar__track">
+          <div class="progress-bar__fill"></div>
+        </div>
+        <div class="progress-bar__label">QUANTUM_BUFFER: ONLINE</div>
+      </div>
+    </div>
+
+    <!-- Strat 3: Obiect Floating (Z: 200px + Animație Orbitală) -->
+    <div class="layer orbital-node">
+      <div class="satellite"></div>
+    </div>
+
+    <!-- Scan line -->
+    <div class="scan-line"></div>
+
+    <!-- Strat 4: Specular Highlight (lumina de reflexie) -->
+    <div class="layer specular-highlight" id="specular"></div>
+
+    <!-- Strat 5: Edge highlight -->
+    <div class="layer edge-highlight"></div>
+
+  </div>
+</main>
+
+<div class="instructions">MOVE CURSOR TO INTERACT — RC 251 EXPERT</div>
+
+<script>
+  const anchor   = document.getElementById('anchor');
+  const engine   = document.getElementById('engine');
+  const root     = document.documentElement;
+  const specular = document.getElementById('specular');
+
+  // ── State ──
+  let lastX = 0, lastY = 0;
+  let velX = 0,  velY = 0;
+  let curX = 0,  curY = 0;
+
+  engine.addEventListener('mousemove', e => {
+    const rect = engine.getBoundingClientRect();
+    const cx = rect.left + rect.width  / 2;
+    const cy = rect.top  + rect.height / 2;
+
+    // Raw mouse position (–1 → +1 range)
+    const nx = (e.clientX - cx) / (rect.width  / 2);
+    const ny = (e.clientY - cy) / (rect.height / 2);
+
+    // ── 1. 3D Rotation (perspective tilt) ──
+    const maxTilt = 18; // degrees
+    const rx = -ny * maxTilt;
+    const ry =  nx * maxTilt;
+    root.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+    root.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+
+    // ── 2. Ray-Traced Shadow (deepens with rotation) ──
+    // Shadow moves away from centre proportional to tilt angle
+    const shadowScale = 2.5;
+    const shadowX = ry * shadowScale;   // ry drives X shadow
+    const shadowY = -rx * shadowScale;  // rx drives Y shadow
+    root.style.setProperty('--shadow-x', shadowX.toFixed(1));
+    root.style.setProperty('--shadow-y', shadowY.toFixed(1));
+
+    // ── 3. Specular Tracking (inverse mouse = fixed light in room) ──
+    // Mouse right → light appears left (inverse)
+    const specX = (0.5 - nx * 0.45) * 100;
+    const specY = (0.5 - ny * 0.45) * 100;
+    root.style.setProperty('--spec-x', specX.toFixed(1) + '%');
+    root.style.setProperty('--spec-y', specY.toFixed(1) + '%');
+
+    // ── 4. Velocity for Chromatic Aberration ──
+    velX = e.clientX - lastX;
+    velY = e.clientY - lastY;
+    lastX = e.clientX;
+    lastY = e.clientY;
+
+    const speed = Math.sqrt(velX * velX + velY * velY);
+    // Clamp: 0 → 2px baseline, fast movement → up to 14px
+    const glitch = Math.min(2 + speed * 0.3, 14);
+    root.style.setProperty('--glitch-offset', glitch.toFixed(2) + 'px');
+  });
+
+  // ── Smoothly decay glitch offset when mouse stops ──
+  function decayGlitch() {
+    const current = parseFloat(
+      getComputedStyle(root).getPropertyValue('--glitch-offset')
+    ) || 2;
+    if (current > 2.05) {
+      root.style.setProperty(
+        '--glitch-offset',
+        Math.max(2, current * 0.88).toFixed(2) + 'px'
+      );
+    }
+    requestAnimationFrame(decayGlitch);
+  }
+  decayGlitch();
+
+  // ── Reset on mouse leave ──
+  engine.addEventListener('mouseleave', () => {
+    root.style.setProperty('--rx', '0deg');
+    root.style.setProperty('--ry', '0deg');
+    root.style.setProperty('--shadow-x', '0');
+    root.style.setProperty('--shadow-y', '0');
+    root.style.setProperty('--spec-x', '50%');
+    root.style.setProperty('--spec-y', '50%');
+  });
+</script>
+</body>
+</html>

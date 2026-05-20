@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SS20_UI_Orchestration_Expert_Chibercea Daniel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+
+    /* ============================================================
+       ROOT VARIABLES — exact din lecție
+    ============================================================ */
+    :root {
+      --base-delay: 100ms;
+      --stagger-step: 150ms;
+      --spring-easing: cubic-bezier(0.5, 1.5, 0.5, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: #050810;
+      color: #e8eaf6;
+      min-height: 100vh;
+      padding: 4rem 2rem;
+    }
+
+    /* Background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(123,92,250,0.2) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(0,245,196,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .site-header {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      opacity: 0;
+      animation: headerReveal 1s ease-out 0.1s forwards;
+    }
+
+    @keyframes headerReveal {
+      from { opacity: 0; clip-path: inset(0 100% 0 0); }
+      to   { opacity: 1; clip-path: inset(0 0% 0 0); }
+    }
+
+    .header-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: #00f5c4;
+      margin-bottom: 0.5rem;
+    }
+
+    .site-header h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #e8eaf6 0%, #7b5cfa 50%, #00f5c4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ============================================================
+       GRID
+    ============================================================ */
+    .ui-orchestrator {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================
+       KEYFRAMES — exact din lecție
+    ============================================================ */
+    @keyframes entrance {
+      0% {
+        opacity: 0;
+        transform: perspective(1000px) rotateX(-20deg) translateY(50px);
+        filter: blur(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: perspective(1000px) rotateX(0) translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes textReveal {
+      from {
+        opacity: 0;
+        clip-path: inset(0 100% 0 0);
+      }
+      to {
+        opacity: 1;
+        clip-path: inset(0 0% 0 0);
+      }
+    }
+
+    /* ============================================================
+       FEATURE WRAPPER
+       CHALLENGE #1: Inverse Stagger — margini spre centru
+    ============================================================ */
+    .feature-wrapper {
+      opacity: 0;
+      /* Optimization: GPU Layering enabled */
+      will-change: transform, opacity;
+      animation: entrance 1s var(--spring-easing) forwards;
+      animation-delay: var(--delay);
+    }
+
+    /* 1 & 6 apar primii */
+    .feature-wrapper[style*="--i: 1"],
+    .feature-wrapper[style*="--i: 6"] { --delay: 100ms; }
+
+    /* 2 & 5 apar al doilea */
+    .feature-wrapper[style*="--i: 2"],
+    .feature-wrapper[style*="--i: 5"] { --delay: 300ms; }
+
+    /* 3 & 4 apar ultimii (centru) */
+    .feature-wrapper[style*="--i: 3"],
+    .feature-wrapper[style*="--i: 4"] { --delay: 500ms; }
+
+    /* ============================================================
+       FEATURE CARD — exact din lecție
+    ============================================================ */
+    .feature-card {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      padding: 2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 2.2rem;
+      flex-shrink: 0;
+      width: 3.5rem;
+      height: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.06);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card-content { flex: 1; }
+
+    .card-content h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      color: #e8eaf6;
+    }
+
+    .card-content p {
+      font-size: 0.85rem;
+      color: rgba(232, 234, 246, 0.5);
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       STAGGER TEXT — Sincronizare interioară
+       Textul apare DOAR după ce cardul s-a așezat (+400ms)
+    ============================================================ */
+    .stagger-text {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      animation: textReveal 0.5s ease-out forwards;
+      animation-delay: calc(var(--delay) + 400ms);
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <p class="header-tag">SS20_UI_Orchestration_Expert_Chibercea Daniel.png</p>
+    <h1>GPU-Accelerated<br>Timeline Engine</h1>
+  </header>
+
+  <section class="ui-orchestrator">
+
+    <!-- Grupul 1 -->
+    <div class="feature-wrapper" style="--i: 1;">
+      <div class="feature-card">
+        <div class="card-icon">🚀</div>
+        <div class="card-content">
+          <h3 class="stagger-text">Arhitectură GPU</h3>
+          <p class="stagger-text">Sincronizare la nivel de pixel.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupul 2 -->
+    <div class="feature-wrapper" style="--i: 2;">
+      <div class="feature-card">
+        <div class="card-icon">⚡</div>
+        <div class="card-content">
+          <h3 class="stagger-text">Timeline Algoritmic</h3>
+          <p class="stagger-text">delay = Base_Delay + (Index × Step).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupul 3 -->
+    <div class="feature-wrapper" style="--i: 3;">
+      <div class="feature-card">
+        <div class="card-icon">🎯</div>
+        <div class="card-content">
+          <h3 class="stagger-text">Zero Layout Shift</h3>
+          <p class="stagger-text">Optimizare First Meaningful Paint.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupul 4 -->
+    <div class="feature-wrapper" style="--i: 4;">
+      <div class="feature-card">
+        <div class="card-icon">🔗</div>
+        <div class="card-content">
+          <h3 class="stagger-text">Chained Animations</h3>
+          <p class="stagger-text">Cardul apare, textul urmează la +400ms.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupul 5 -->
+    <div class="feature-wrapper" style="--i: 5;">
+      <div class="feature-card">
+        <div class="card-icon">🎛️</div>
+        <div class="card-content">
+          <h3 class="stagger-text">Spring Easing</h3>
+          <p class="stagger-text">cubic-bezier(0.5, 1.5, 0.5, 1) overshoot.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupul 6 -->
+    <div class="feature-wrapper" style="--i: 6;">
+      <div class="feature-card">
+        <div class="card-icon">🌊</div>
+        <div class="card-content">
+          <h3 class="stagger-text">clip-path Reveal</h3>
+          <p class="stagger-text">Efect cinematic de dezvăluire text.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ziua 7 — Enterprise Form Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="page">
+    <div class="page__noise" aria-hidden="true"></div>
+
+    <header class="page__header">
+      <div class="badge">
+        <span class="badge__dot"></span>
+        <span class="badge__text">Ziua 7 · BEM Architecture</span>
+      </div>
+      <h1 class="page__title">Enterprise<br /><em>Form Engine</em></h1>
+      <p class="page__subtitle">CSS State Machine · Zero JS Validation · BEM Methodology</p>
+    </header>
+
+    <main class="form-wrapper">
+
+      <label class="debug-toggle">
+        <input class="debug-toggle__input" type="checkbox" id="debugToggle"
+          onchange="document.body.classList.toggle('debug-gpu', this.checked)" />
+        <span class="debug-toggle__track">
+          <span class="debug-toggle__thumb"></span>
+        </span>
+        <span class="debug-toggle__label">GPU Layer Debug</span>
+      </label>
+
+      <form class="form" autocomplete="off" novalidate>
+
+        <!-- SECTION 01 -->
+        <fieldset class="form__section">
+          <legend class="form__section-title">// 01 · Informații Personale</legend>
+
+          <div class="form__field">
+            <input class="form__input" id="name" name="name" type="text"
+              placeholder=" " required minlength="2" />
+            <label class="form__label" for="name">Nume complet</label>
+            <span class="form__indicator" aria-hidden="true"></span>
+            <span class="form__hint form__hint--error">Minim 2 caractere.</span>
+            <span class="form__hint form__hint--ok">Arată bine!</span>
+          </div>
+
+          <div class="form__field">
+            <input class="form__input" id="email" name="email" type="email"
+              placeholder=" " required />
+            <label class="form__label" for="email">Adresă email</label>
+            <span class="form__indicator" aria-hidden="true"></span>
+            <span class="form__hint form__hint--error">Email invalid.</span>
+            <span class="form__hint form__hint--ok">Email valid!</span>
+          </div>
+
+          <div class="form__field">
+            <input class="form__input" id="phone" name="phone" type="tel"
+              placeholder=" " pattern="[0-9\+\s\-]{7,15}" required />
+            <label class="form__label" for="phone">Număr de telefon</label>
+            <span class="form__indicator" aria-hidden="true"></span>
+            <span class="form__hint form__hint--error">Format: +373 xxx xxx.</span>
+            <span class="form__hint form__hint--ok">Perfect!</span>
+          </div>
+        </fieldset>
+
+        <!-- SECTION 02 -->
+        <fieldset class="form__section">
+          <legend class="form__section-title">// 02 · Servicii Solicitate</legend>
+
+          <div class="service-container" id="serviceContainer"></div>
+          <p class="service-container__empty-msg">Niciun serviciu selectat.</p>
+
+          <div class="service-grid">
+            <label class="service-card">
+              <input class="service-card__input" type="checkbox" name="service" value="web" />
+              <span class="service-card__body">
+                <span class="service-card__icon">⬡</span>
+                <span class="service-card__name">Web Design</span>
+              </span>
+            </label>
+            <label class="service-card">
+              <input class="service-card__input" type="checkbox" name="service" value="branding" />
+              <span class="service-card__body">
+                <span class="service-card__icon">◈</span>
+                <span class="service-card__name">Branding</span>
+              </span>
+            </label>
+            <label class="service-card">
+              <input class="service-card__input" type="checkbox" name="service" value="dev" />
+              <span class="service-card__body">
+                <span class="service-card__icon">⬡</span>
+                <span class="service-card__name">Development</span>
+              </span>
+            </label>
+            <label class="service-card">
+              <input class="service-card__input" type="checkbox" name="service" value="seo" />
+              <span class="service-card__body">
+                <span class="service-card__icon">◈</span>
+                <span class="service-card__name">SEO & Analytics</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- SECTION 03 -->
+        <fieldset class="form__section">
+          <legend class="form__section-title">// 03 · Mesajul Tău</legend>
+
+          <div class="form__field form__field--textarea">
+            <textarea class="form__input form__input--textarea" id="message"
+              name="message" placeholder=" " required minlength="10" rows="4"></textarea>
+            <label class="form__label" for="message">Descrie proiectul</label>
+            <span class="form__indicator" aria-hidden="true"></span>
+            <span class="form__hint form__hint--error">Minim 10 caractere.</span>
+            <span class="form__hint form__hint--ok">Mesaj primit.</span>
+          </div>
+        </fieldset>
+
+        <!-- FOOTER -->
+        <div class="form__footer">
+          <label class="form__terms">
+            <input class="form__terms-checkbox" id="terms" name="terms"
+              type="checkbox" required />
+            <span class="form__terms-track">
+              <span class="form__terms-checkmark">✓</span>
+            </span>
+            <span class="form__terms-text">
+              Accept <a class="form__terms-link" href="#">Termenii și Condițiile</a>
+            </span>
+          </label>
+
+          <button class="form__submit-btn" type="submit" disabled>
+            <span class="form__submit-btn__text">Trimite Formularul</span>
+            <span class="form__submit-btn__ring" aria-hidden="true"></span>
+          </button>
+        </div>
+
+      </form>
+    </main>
+
+    <footer class="page__footer">
+      <div class="legend">
+        <span class="legend__item"><span class="legend__dot legend__dot--blue"></span>Focus</span>
+        <span class="legend__item"><span class="legend__dot legend__dot--green"></span>Valid</span>
+        <span class="legend__item"><span class="legend__dot legend__dot--red"></span>Invalid</span>
+        <span class="legend__item"><span class="legend__dot legend__dot--pulse"></span>Gatekeeper Active</span>
+      </div>
+      <p class="page__credit">BEM · CSS State Machine · GPU Optimized · Ziua 7</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
